@@ -1,0 +1,3 @@
+OpenFPGA - Varvara
+
+Early work-in-progress PipelineC FPGA implementation of Varvara / Uxn by Hundred Rabbits

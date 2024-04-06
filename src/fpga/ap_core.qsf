@@ -1,0 +1,997 @@
+# -------------------------------------------------------------------------- #
+#
+# Copyright (C) 2019  Intel Corporation. All rights reserved.
+# Your use of Intel Corporation's design tools, logic functions 
+# and other software and tools, and any partner logic 
+# functions, and any output files from any of the foregoing 
+# (including device programming or simulation files), and any 
+# associated documentation or information are expressly subject 
+# to the terms and conditions of the Intel Program License 
+# Subscription Agreement, the Intel Quartus Prime License Agreement,
+# the Intel FPGA IP License Agreement, or other applicable license
+# agreement, including, without limitation, that your use is for
+# the sole purpose of programming logic devices manufactured by
+# Intel and sold by Intel or its authorized distributors.  Please
+# refer to the applicable agreement for further details, at
+# https://fpgasoftware.intel.com/eula.
+#
+# -------------------------------------------------------------------------- #
+#
+# Quartus Prime
+# Version 18.1.1 Build 646 04/11/2019 SJ Lite Edition
+# Date created = 19:22:02  April 19, 2022
+#
+# -------------------------------------------------------------------------- #
+#
+# Notes:
+#
+# 1) The default values for assignments are stored in the file:
+#		ap_core_assignment_defaults.qdf
+#    If this file doesn't exist, see file:
+#		assignment_defaults.qdf
+#
+# 2) Altera recommends that you do not modify this file. This
+#    file is updated automatically by the Quartus Prime software
+#    and any changes you make may be lost or overwritten.
+#
+# -------------------------------------------------------------------------- #
+
+
+
+# Project-Wide Assignments
+# ========================
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION 18.1.1
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "21:31:36  JANUARY 22, 2020"
+set_global_assignment -name LAST_QUARTUS_VERSION "22.1std.1 Lite Edition"
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_global_assignment -name PRE_FLOW_SCRIPT_FILE "quartus_sh:apf/build_id_gen.tcl"
+set_global_assignment -name SMART_RECOMPILE ON
+set_global_assignment -name NUM_PARALLEL_PROCESSORS 2
+
+# Pin & Location Assignments
+# ==========================
+set_location_assignment PIN_T17 -to bridge_spiclk
+set_location_assignment PIN_M21 -to bridge_spimiso
+set_location_assignment PIN_M20 -to bridge_spimosi
+set_location_assignment PIN_AA9 -to cart_tran_bank0[7]
+set_location_assignment PIN_AB8 -to cart_tran_bank0[6]
+set_location_assignment PIN_AA8 -to cart_tran_bank0[5]
+set_location_assignment PIN_AB7 -to cart_tran_bank0[4]
+set_location_assignment PIN_AB6 -to cart_tran_bank0_dir
+set_location_assignment PIN_AA10 -to cart_tran_bank1[7]
+set_location_assignment PIN_AB10 -to cart_tran_bank1[6]
+set_location_assignment PIN_Y10 -to cart_tran_bank1[5]
+set_location_assignment PIN_AB11 -to cart_tran_bank1[4]
+set_location_assignment PIN_Y11 -to cart_tran_bank1[3]
+set_location_assignment PIN_AB12 -to cart_tran_bank1[2]
+set_location_assignment PIN_AA12 -to cart_tran_bank1[1]
+set_location_assignment PIN_AB13 -to cart_tran_bank1[0]
+set_location_assignment PIN_AA13 -to cart_tran_bank1_dir
+set_location_assignment PIN_AB15 -to cart_tran_bank2[7]
+set_location_assignment PIN_AA15 -to cart_tran_bank2[6]
+set_location_assignment PIN_AB17 -to cart_tran_bank2[5]
+set_location_assignment PIN_AA17 -to cart_tran_bank2[4]
+set_location_assignment PIN_AB18 -to cart_tran_bank2[3]
+set_location_assignment PIN_AB20 -to cart_tran_bank2[0]
+set_location_assignment PIN_AA19 -to cart_tran_bank2[1]
+set_location_assignment PIN_AA18 -to cart_tran_bank2[2]
+set_location_assignment PIN_AA14 -to cart_tran_bank2_dir
+set_location_assignment PIN_AA20 -to cart_tran_bank3[7]
+set_location_assignment PIN_AB21 -to cart_tran_bank3[6]
+set_location_assignment PIN_AB22 -to cart_tran_bank3[5]
+set_location_assignment PIN_AA22 -to cart_tran_bank3[4]
+set_location_assignment PIN_Y21 -to cart_tran_bank3[3]
+set_location_assignment PIN_Y22 -to cart_tran_bank3[2]
+set_location_assignment PIN_W21 -to cart_tran_bank3[1]
+set_location_assignment PIN_W22 -to cart_tran_bank3[0]
+set_location_assignment PIN_V21 -to cart_tran_bank3_dir
+set_location_assignment PIN_AB5 -to cart_tran_pin30_dir
+set_location_assignment PIN_L8 -to cart_tran_pin30
+set_location_assignment PIN_K9 -to cart_tran_pin31
+set_location_assignment PIN_V15 -to clk_74a
+set_location_assignment PIN_H16 -to clk_74b
+set_location_assignment PIN_H8 -to cram0_a[21]
+set_location_assignment PIN_H9 -to cram0_a[20]
+set_location_assignment PIN_B7 -to cram0_a[19]
+set_location_assignment PIN_B6 -to cram0_a[18]
+set_location_assignment PIN_C6 -to cram0_a[17]
+set_location_assignment PIN_H6 -to cram0_a[16]
+set_location_assignment PIN_J8 -to cram0_adv_n
+set_location_assignment PIN_B5 -to cram0_ce0_n
+set_location_assignment PIN_E10 -to cram0_ce1_n
+set_location_assignment PIN_G10 -to cram0_clk
+set_location_assignment PIN_F7 -to cram0_cre
+set_location_assignment PIN_J9 -to cram0_dq[15]
+set_location_assignment PIN_L7 -to cram0_dq[14]
+set_location_assignment PIN_F9 -to cram0_dq[13]
+set_location_assignment PIN_E7 -to cram0_dq[12]
+set_location_assignment PIN_A8 -to cram0_dq[11]
+set_location_assignment PIN_D9 -to cram0_dq[10]
+set_location_assignment PIN_A10 -to cram0_dq[9]
+set_location_assignment PIN_C9 -to cram0_dq[8]
+set_location_assignment PIN_J7 -to cram0_dq[7]
+set_location_assignment PIN_G6 -to cram0_dq[6]
+set_location_assignment PIN_F10 -to cram0_dq[5]
+set_location_assignment PIN_E9 -to cram0_dq[4]
+set_location_assignment PIN_D7 -to cram0_dq[3]
+set_location_assignment PIN_A9 -to cram0_dq[2]
+set_location_assignment PIN_C8 -to cram0_dq[1]
+set_location_assignment PIN_B10 -to cram0_dq[0]
+set_location_assignment PIN_A5 -to cram0_lb_n
+set_location_assignment PIN_D6 -to cram0_oe_n
+set_location_assignment PIN_A7 -to cram0_ub_n
+set_location_assignment PIN_K7 -to cram0_wait
+set_location_assignment PIN_G8 -to cram0_we_n
+set_location_assignment PIN_Y3 -to cram1_a[21]
+set_location_assignment PIN_AA2 -to cram1_a[20]
+set_location_assignment PIN_L2 -to cram1_a[19]
+set_location_assignment PIN_N1 -to cram1_a[18]
+set_location_assignment PIN_U1 -to cram1_a[17]
+set_location_assignment PIN_U2 -to cram1_a[16]
+set_location_assignment PIN_U8 -to cram1_adv_n
+set_location_assignment PIN_N2 -to cram1_ce0_n
+set_location_assignment PIN_T8 -to cram1_ce1_n
+set_location_assignment PIN_W2 -to cram1_clk
+set_location_assignment PIN_T7 -to cram1_cre
+set_location_assignment PIN_W8 -to cram1_dq[15]
+set_location_assignment PIN_U6 -to cram1_dq[14]
+set_location_assignment PIN_R7 -to cram1_dq[13]
+set_location_assignment PIN_R6 -to cram1_dq[12]
+set_location_assignment PIN_P7 -to cram1_dq[11]
+set_location_assignment PIN_N6 -to cram1_dq[10]
+set_location_assignment PIN_C2 -to cram1_dq[9]
+set_location_assignment PIN_D3 -to cram1_dq[8]
+set_location_assignment PIN_V6 -to cram1_dq[7]
+set_location_assignment PIN_U7 -to cram1_dq[6]
+set_location_assignment PIN_M6 -to cram1_dq[5]
+set_location_assignment PIN_R5 -to cram1_dq[4]
+set_location_assignment PIN_P6 -to cram1_dq[3]
+set_location_assignment PIN_E2 -to cram1_dq[2]
+set_location_assignment PIN_G2 -to cram1_dq[1]
+set_location_assignment PIN_C1 -to cram1_dq[0]
+set_location_assignment PIN_L1 -to cram1_lb_n
+set_location_assignment PIN_M7 -to cram1_oe_n
+set_location_assignment PIN_G1 -to cram1_ub_n
+set_location_assignment PIN_W9 -to cram1_wait
+set_location_assignment PIN_AA1 -to cram1_we_n
+set_location_assignment PIN_J17 -to dram_a[12]
+set_location_assignment PIN_F15 -to dram_a[11]
+set_location_assignment PIN_C13 -to dram_a[10]
+set_location_assignment PIN_G17 -to dram_a[9]
+set_location_assignment PIN_J18 -to dram_a[8]
+set_location_assignment PIN_F14 -to dram_a[7]
+set_location_assignment PIN_E15 -to dram_a[6]
+set_location_assignment PIN_E16 -to dram_a[5]
+set_location_assignment PIN_F13 -to dram_a[4]
+set_location_assignment PIN_E14 -to dram_a[3]
+set_location_assignment PIN_F12 -to dram_a[2]
+set_location_assignment PIN_D12 -to dram_a[1]
+set_location_assignment PIN_D17 -to dram_a[0]
+set_location_assignment PIN_E12 -to dram_ba[1]
+set_location_assignment PIN_C16 -to dram_ba[0]
+set_location_assignment PIN_B16 -to dram_cas_n
+set_location_assignment PIN_G18 -to dram_cke
+set_location_assignment PIN_G12 -to dram_clk
+set_location_assignment PIN_K20 -to dram_dq[15]
+set_location_assignment PIN_G11 -to dram_dq[14]
+set_location_assignment PIN_J19 -to dram_dq[13]
+set_location_assignment PIN_H13 -to dram_dq[12]
+set_location_assignment PIN_G13 -to dram_dq[11]
+set_location_assignment PIN_G16 -to dram_dq[10]
+set_location_assignment PIN_G15 -to dram_dq[9]
+set_location_assignment PIN_J13 -to dram_dq[8]
+set_location_assignment PIN_A12 -to dram_dq[7]
+set_location_assignment PIN_A13 -to dram_dq[6]
+set_location_assignment PIN_B12 -to dram_dq[5]
+set_location_assignment PIN_A14 -to dram_dq[4]
+set_location_assignment PIN_B13 -to dram_dq[3]
+set_location_assignment PIN_A15 -to dram_dq[2]
+set_location_assignment PIN_B15 -to dram_dq[1]
+set_location_assignment PIN_C15 -to dram_dq[0]
+set_location_assignment PIN_B11 -to dram_ras_n
+set_location_assignment PIN_C11 -to dram_we_n
+set_location_assignment PIN_H10 -to port_ir_rx
+set_location_assignment PIN_H11 -to port_ir_tx
+set_location_assignment PIN_AA7 -to port_tran_sck
+set_location_assignment PIN_R9 -to port_tran_sd
+set_location_assignment PIN_V10 -to port_tran_si
+set_location_assignment PIN_T13 -to port_tran_so_dir
+set_location_assignment PIN_V9 -to port_tran_si_dir
+set_location_assignment PIN_T9 -to port_tran_sd_dir
+set_location_assignment PIN_Y9 -to port_tran_sck_dir
+set_location_assignment PIN_J11 -to port_tran_so
+set_location_assignment PIN_H15 -to scal_audadc
+set_location_assignment PIN_K19 -to scal_auddac
+set_location_assignment PIN_K17 -to scal_audlrck
+set_location_assignment PIN_K16 -to scal_audmclk
+set_location_assignment PIN_R17 -to scal_clk
+set_location_assignment PIN_N20 -to scal_de
+set_location_assignment PIN_P17 -to scal_hs
+set_location_assignment PIN_N21 -to scal_skip
+set_location_assignment PIN_T15 -to scal_vs
+set_location_assignment PIN_U10 -to bist
+set_location_assignment PIN_V16 -to sram_a[16]
+set_location_assignment PIN_U12 -to sram_a[15]
+set_location_assignment PIN_U15 -to sram_a[14]
+set_location_assignment PIN_R10 -to sram_a[13]
+set_location_assignment PIN_V14 -to sram_a[12]
+set_location_assignment PIN_T10 -to sram_a[11]
+set_location_assignment PIN_U11 -to sram_a[10]
+set_location_assignment PIN_Y14 -to sram_a[9]
+set_location_assignment PIN_U13 -to sram_a[8]
+set_location_assignment PIN_Y19 -to sram_a[7]
+set_location_assignment PIN_P8 -to sram_a[6]
+set_location_assignment PIN_V19 -to sram_a[5]
+set_location_assignment PIN_N9 -to sram_a[4]
+set_location_assignment PIN_U21 -to sram_a[3]
+set_location_assignment PIN_M8 -to sram_a[2]
+set_location_assignment PIN_M9 -to sram_a[1]
+set_location_assignment PIN_T14 -to sram_a[0]
+set_location_assignment PIN_Y15 -to sram_dq[15]
+set_location_assignment PIN_W16 -to sram_dq[14]
+set_location_assignment PIN_Y16 -to sram_dq[13]
+set_location_assignment PIN_Y17 -to sram_dq[12]
+set_location_assignment PIN_V20 -to sram_dq[11]
+set_location_assignment PIN_V18 -to sram_dq[10]
+set_location_assignment PIN_U20 -to sram_dq[9]
+set_location_assignment PIN_U16 -to sram_dq[8]
+set_location_assignment PIN_R12 -to sram_dq[7]
+set_location_assignment PIN_V13 -to sram_dq[6]
+set_location_assignment PIN_T12 -to sram_dq[5]
+set_location_assignment PIN_W19 -to sram_dq[4]
+set_location_assignment PIN_Y20 -to sram_dq[3]
+set_location_assignment PIN_P14 -to sram_dq[2]
+set_location_assignment PIN_P9 -to sram_dq[1]
+set_location_assignment PIN_N8 -to sram_dq[0]
+set_location_assignment PIN_U17 -to sram_ub_n
+set_location_assignment PIN_R11 -to sram_we_n
+set_location_assignment PIN_N19 -to vblank
+set_location_assignment PIN_R14 -to sram_oe_n
+set_location_assignment PIN_P12 -to sram_lb_n
+set_location_assignment PIN_H14 -to bridge_spiss
+set_location_assignment PIN_M22 -to user1
+set_location_assignment PIN_L22 -to user2
+set_location_assignment PIN_K21 -to dbg_tx
+set_location_assignment PIN_K22 -to dbg_rx
+set_location_assignment PIN_L19 -to bridge_1wire
+set_location_assignment PIN_R16 -to scal_vid[11]
+set_location_assignment PIN_R15 -to scal_vid[10]
+set_location_assignment PIN_R22 -to scal_vid[9]
+set_location_assignment PIN_T22 -to scal_vid[8]
+set_location_assignment PIN_T18 -to scal_vid[7]
+set_location_assignment PIN_T19 -to scal_vid[6]
+set_location_assignment PIN_T20 -to scal_vid[5]
+set_location_assignment PIN_P19 -to scal_vid[4]
+set_location_assignment PIN_P18 -to scal_vid[3]
+set_location_assignment PIN_N16 -to scal_vid[2]
+set_location_assignment PIN_P22 -to scal_vid[1]
+set_location_assignment PIN_R21 -to scal_vid[0]
+set_location_assignment PIN_P16 -to vpll_feed
+set_location_assignment PIN_L18 -to port_ir_rx_disable
+set_location_assignment PIN_D13 -to dram_dqm[0]
+set_location_assignment PIN_H18 -to dram_dqm[1]
+set_location_assignment PIN_U22 -to cart_tran_pin31_dir
+set_location_assignment PIN_L17 -to cart_pin30_pwroff_reset
+set_location_assignment PIN_M16 -to aux_scl
+set_location_assignment PIN_M18 -to aux_sda
+
+# Classic Timing Assignments
+# ==========================
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name TIMING_ANALYZER_MULTICORNER_ANALYSIS ON
+
+# Compiler Assignments
+# ====================
+set_global_assignment -name OPTIMIZATION_MODE "HIGH PERFORMANCE EFFORT"
+
+# Analysis & Synthesis Assignments
+# ================================
+set_global_assignment -name FAMILY "Cyclone V"
+set_global_assignment -name DEVICE_FILTER_PACKAGE FBGA
+set_global_assignment -name DEVICE_FILTER_PIN_COUNT 484
+set_global_assignment -name DEVICE_FILTER_SPEED_GRADE 8
+set_global_assignment -name TOP_LEVEL_ENTITY apf_top
+set_global_assignment -name SAFE_STATE_MACHINE ON
+set_global_assignment -name ADV_NETLIST_OPT_SYNTH_WYSIWYG_REMAP ON
+set_global_assignment -name SYNTH_PROTECT_SDC_CONSTRAINT ON
+set_global_assignment -name PRE_MAPPING_RESYNTHESIS ON
+set_global_assignment -name OPTIMIZATION_TECHNIQUE SPEED
+set_global_assignment -name MUX_RESTRUCTURE OFF
+
+# Fitter Assignments
+# ==================
+set_global_assignment -name DEVICE 5CEBA4F23C8
+set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 256
+set_global_assignment -name STRATIXV_CONFIGURATION_SCHEME "PASSIVE SERIAL"
+set_global_assignment -name CRC_ERROR_OPEN_DRAIN ON
+set_global_assignment -name ACTIVE_SERIAL_CLOCK FREQ_100MHZ
+set_global_assignment -name ROUTER_CLOCKING_TOPOLOGY_ANALYSIS ON
+set_global_assignment -name ECO_OPTIMIZE_TIMING ON
+set_global_assignment -name PERIPHERY_TO_CORE_PLACEMENT_AND_ROUTING_OPTIMIZATION ON
+set_global_assignment -name PHYSICAL_SYNTHESIS_COMBO_LOGIC ON
+set_global_assignment -name PHYSICAL_SYNTHESIS_REGISTER_DUPLICATION ON
+set_global_assignment -name PHYSICAL_SYNTHESIS_REGISTER_RETIMING ON
+set_global_assignment -name PHYSICAL_SYNTHESIS_ASYNCHRONOUS_SIGNAL_PIPELINING ON
+set_global_assignment -name FITTER_EFFORT "AUTO FIT"
+set_global_assignment -name ROUTER_LCELL_INSERTION_AND_LOGIC_DUPLICATION ON
+
+# Assembler Assignments
+# =====================
+set_global_assignment -name ENABLE_OCT_DONE OFF
+set_global_assignment -name USE_CONFIGURATION_DEVICE ON
+set_global_assignment -name GENERATE_RBF_FILE ON
+
+# Signal Tap Assignments
+# ======================
+set_global_assignment -name ENABLE_SIGNALTAP ON
+set_global_assignment -name USE_SIGNALTAP_FILE core/stp1.stp
+
+# Power Estimation Assignments
+# ============================
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+
+# Advanced I/O Timing Assignments
+# ===============================
+set_global_assignment -name OUTPUT_IO_TIMING_NEAR_END_VMEAS "HALF VCCIO" -rise
+set_global_assignment -name OUTPUT_IO_TIMING_NEAR_END_VMEAS "HALF VCCIO" -fall
+set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -rise
+set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -fall
+
+# ---------------------
+# start ENTITY(apf_top)
+
+	# Fitter Assignments
+	# ==================
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank0[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_we_n
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_lb_n
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[10]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[11]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[13]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[15]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to bist
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to port_tran_si_dir
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to port_tran_si
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to port_tran_sd_dir
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to port_tran_sd
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to port_tran_sck_dir
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to port_tran_sck
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_pin30_dir
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank1[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank1[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank1[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank1[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank1[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank1[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank0_dir
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank0[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank0[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank0[6]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to vblank
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_ub_n
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_oe_n
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[8]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[9]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[10]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[11]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[12]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[13]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[14]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[15]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[8]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[9]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[12]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[14]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[16]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to port_tran_so_dir
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to clk_74a
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank3_dir
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank3[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank3[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank3[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank3[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank3[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank3[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank3[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank3[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank2_dir
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank2[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank2[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank2[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank2[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank2[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank2[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank2[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank2[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank1_dir
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank1[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank1[2]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vs
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_skip
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_hs
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_de
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_clk
+set_instance_assignment -name IO_STANDARD "1.8 V" -to bridge_spimosi
+set_instance_assignment -name IO_STANDARD "1.8 V" -to bridge_spimiso
+set_instance_assignment -name IO_STANDARD "1.8 V" -to bridge_spiclk
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_audmclk
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_audlrck
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_auddac
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_audadc
+set_instance_assignment -name IO_STANDARD "1.8 V" -to port_tran_so
+set_instance_assignment -name IO_STANDARD "1.8 V" -to port_ir_tx
+set_instance_assignment -name IO_STANDARD "1.8 V" -to port_ir_rx
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_we_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_ras_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[0]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[1]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[2]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[3]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[4]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[5]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[6]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[7]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[8]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[9]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[10]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[11]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[12]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[13]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[14]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[15]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_clk
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_cke
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_cas_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_ba[0]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_ba[1]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[0]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[1]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[2]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[3]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[4]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[5]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[6]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[7]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[8]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[9]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[10]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[11]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[12]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to clk_74b
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cart_tran_pin31
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cart_tran_pin30
+set_instance_assignment -name IO_STANDARD "1.8 V" -to bridge_spiss
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_we_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_wait
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_ub_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_oe_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_lb_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[0]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[1]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[2]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[3]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[4]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[5]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[6]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[7]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[8]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[9]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[10]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[11]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[12]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[13]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[14]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[15]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_cre
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_clk
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_ce1_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_ce0_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_adv_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_a[16]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_a[17]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_a[18]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_a[19]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_a[20]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_a[21]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_we_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_ub_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_lb_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[0]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[1]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[2]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[8]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[9]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_clk
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_ce0_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_a[16]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_a[17]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_a[18]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_a[19]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_a[20]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_a[21]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_wait
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_oe_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[3]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[4]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[5]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[6]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[7]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[10]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[11]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[12]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[13]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[14]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[15]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_cre
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_ce1_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_adv_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to user1
+set_instance_assignment -name IO_STANDARD "1.8 V" -to user2
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dbg_rx
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dbg_tx
+set_instance_assignment -name IO_STANDARD "1.8 V" -to bridge_1wire
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[11]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[10]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[9]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[8]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[7]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[6]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[5]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[4]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[3]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[2]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[1]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[0]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dqm[0]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dqm[1]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to aux_sda
+set_instance_assignment -name IO_STANDARD "1.8 V" -to aux_scl
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cart_pin30_pwroff_reset
+set_instance_assignment -name IO_STANDARD "1.8 V" -to port_ir_rx_disable
+set_instance_assignment -name IO_STANDARD "1.8 V" -to vpll_feed
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_pin31_dir
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to cram0_clk
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to dram_clk
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_audmclk
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_auddac
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_audlrck
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to vpll_feed
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to cram1_clk
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_clk
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dqm[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dqm[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[4]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[5]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[6]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[7]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[8]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[9]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[10]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[11]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[12]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[13]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[14]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[15]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_we_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_cas_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_ras_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[15]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_cke
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[12]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_ba[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_ba[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[4]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[5]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[6]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[7]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[8]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[9]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[10]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[11]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dbg_tx
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_we_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_wait
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_ub_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_oe_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_lb_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[4]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[5]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[6]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[7]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[8]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[9]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[10]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[11]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[12]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[13]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[14]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_cre
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_ce1_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_ce0_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_adv_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_a[16]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_a[17]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_a[18]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_a[19]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_a[20]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_a[21]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_we_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_wait
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_ub_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_oe_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_lb_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[4]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[5]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[6]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[7]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[8]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[9]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[10]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[11]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[12]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[13]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[14]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[15]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_cre
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_ce1_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_ce0_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_adv_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_a[16]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_a[17]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_a[18]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_a[19]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_a[20]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_a[21]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cart_tran_pin31
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cart_tran_pin30
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cart_pin30_pwroff_reset
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to bridge_spimosi
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to bridge_spimiso
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to bridge_1wire
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to aux_sda
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to aux_scl
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to bridge_spiclk
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_de
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vs
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[0]
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[1]
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[2]
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[3]
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[4]
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[5]
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[6]
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[7]
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[8]
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[9]
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[10]
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[11]
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_hs
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_skip
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to port_tran_so
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to port_ir_tx
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to port_ir_rx_disable
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to port_ir_rx
+
+	# start DESIGN_PARTITION(Top)
+	# ---------------------------
+
+		# Incremental Compilation Assignments
+		# ===================================
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+
+	# end DESIGN_PARTITION(Top)
+	# -------------------------
+
+# end ENTITY(apf_top)
+# -------------------
+
+# ------------------------
+# start ENTITY(mf_pllbase)
+
+	# Project-Wide Assignments
+	# ========================
+
+# end ENTITY(mf_pllbase)
+# ----------------------
+
+# -----------------------------
+# start ENTITY(mf_pllbase_0002)
+
+	# Project-Wide Assignments
+	# ========================
+
+# end ENTITY(mf_pllbase_0002)
+# ---------------------------
+set_global_assignment -name QIP_FILE apf/apf.qip
+set_global_assignment -name VERILOG_FILE core/core_top.v
+set_global_assignment -name VERILOG_FILE core/core_bridge_cmd.v
+set_global_assignment -name SYSTEMVERILOG_FILE core/data_loader.sv
+set_global_assignment -name SDC_FILE core/core_constraints.sdc
+set_global_assignment -name SIGNALTAP_FILE core/stp1.stp
+set_global_assignment -name QIP_FILE core/mf_pllbase.qip
+set_global_assignment -name SIP_FILE core/mf_pllbase.sip
+set_global_assignment -name VHDL_INPUT_VERSION VHDL_2008
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to bridge_1wire
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to bridge_spiclk
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to bridge_spimiso
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to bridge_spimosi
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/pipelinec_fifo_fwft.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/c_structs_pkg.pkg.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/top/top.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/uxn_top/uxn_top_0CLK_f3bbcbbb.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/MUX_uint1_t_uint1_t_uint1_t/MUX_uint1_t_uint1_t_uint1_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/MUX_uint1_t_uint24_t_uint24_t/MUX_uint1_t_uint24_t_uint24_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/device_ram_update/device_ram_update_0CLK_23f04728.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/UNARY_OP_NOT_uint1_t/UNARY_OP_NOT_uint1_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/MUX_uint1_t_uint8_t_uint8_t/MUX_uint1_t_uint8_t_uint8_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_EQ_uint16_t_uint1_t/BIN_OP_EQ_uint16_t_uint1_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/vector_snoop/vector_snoop_0CLK_226cf4bb.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/main_ram_update/main_ram_update_0CLK_23f04728.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/step_gpu/step_gpu_0CLK_a131037b.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_EQ_uint24_t_uint24_t/BIN_OP_EQ_uint24_t_uint24_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/MUX_uint1_t_uint16_t_uint16_t/MUX_uint1_t_uint16_t_uint16_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/step_cpu/step_cpu_0CLK_c1126022.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_PLUS_uint16_t_uint16_t/BIN_OP_PLUS_uint16_t_uint16_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_PLUS_uint24_t_uint1_t/BIN_OP_PLUS_uint24_t_uint1_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/palette_snoop/palette_snoop_0CLK_afb80682.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/MUX_uint1_t_cpu_step_result_t_cpu_step_result_t/MUX_uint1_t_cpu_step_result_t_cpu_step_result_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_PLUS_uint10_t_uint1_t/BIN_OP_PLUS_uint10_t_uint1_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_AND_uint1_t_uint1_t/BIN_OP_AND_uint1_t_uint1_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_EQ_uint4_t_uint1_t/BIN_OP_EQ_uint4_t_uint1_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_EQ_uint12_t_uint1_t/BIN_OP_EQ_uint12_t_uint1_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_OR_uint1_t_uint1_t/BIN_OP_OR_uint1_t_uint1_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/MUX_uint1_t_uint2_t_uint2_t/MUX_uint1_t_uint2_t_uint2_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_EQ_uint15_t_uint15_t/BIN_OP_EQ_uint15_t_uint15_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/MUX_uint1_t_uint12_t_uint12_t/MUX_uint1_t_uint12_t_uint12_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/MUX_uint1_t_uint12_t_4_uint12_t_4/MUX_uint1_t_uint12_t_4_uint12_t_4_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/MUX_uint1_t_uint15_t_uint15_t/MUX_uint1_t_uint15_t_uint15_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_PLUS_uint8_t_uint1_t/BIN_OP_PLUS_uint8_t_uint1_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/MUX_uint1_t_vector_snoop_result_t_vector_snoop_result_t/MUX_uint1_t_vector_snoop_result_t_vector_snoop_result_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/MUX_uint1_t_uint10_t_uint10_t/MUX_uint1_t_uint10_t_uint10_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_PLUS_uint12_t_uint1_t/BIN_OP_PLUS_uint12_t_uint1_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/fg_vram_update/fg_vram_update_0CLK_6f2c5aad.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_EQ_uint2_t_uint1_t/BIN_OP_EQ_uint2_t_uint1_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/VAR_REF_RD_uint12_t_uint12_t_4_VAR_d41d/VAR_REF_RD_uint12_t_uint12_t_4_VAR_d41d_0CLK_9e40ec46.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_EQ_uint8_t_uint8_t/BIN_OP_EQ_uint8_t_uint8_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_PLUS_uint15_t_uint1_t/BIN_OP_PLUS_uint15_t_uint1_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_EQ_uint4_t_uint4_t/BIN_OP_EQ_uint4_t_uint4_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/eval_opcode_phased/eval_opcode_phased_0CLK_13335f23.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/MUX_uint1_t_uint17_t_uint17_t/MUX_uint1_t_uint17_t_uint17_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_MINUS_uint12_t_uint2_t/BIN_OP_MINUS_uint12_t_uint2_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_PLUS_uint2_t_uint1_t/BIN_OP_PLUS_uint2_t_uint1_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_MINUS_uint16_t_uint2_t/BIN_OP_MINUS_uint16_t_uint2_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_EQ_uint8_t_uint1_t/BIN_OP_EQ_uint8_t_uint1_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_NEQ_uint8_t_uint1_t/BIN_OP_NEQ_uint8_t_uint1_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_NEQ_uint8_t_uint8_t/BIN_OP_NEQ_uint8_t_uint8_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_EQ_uint2_t_uint2_t/BIN_OP_EQ_uint2_t_uint2_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/mem.h/main_ram_update_main_ram_RAM_SP_RF_1/main_ram_update_main_ram_RAM_SP_RF_1_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/draw_queue_update/draw_queue_update_0CLK_380ecc95.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/MUX_uint1_t_draw_command_t_draw_command_t/MUX_uint1_t_draw_command_t_draw_command_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_PLUS_uint16_t_uint1_t/BIN_OP_PLUS_uint16_t_uint1_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_EQ_uint12_t_uint2_t/BIN_OP_EQ_uint12_t_uint2_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_EQ_uint10_t_uint10_t/BIN_OP_EQ_uint10_t_uint10_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/bg_vram_update/bg_vram_update_0CLK_6f2c5aad.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_EQ_uint16_t_uint16_t/BIN_OP_EQ_uint16_t_uint16_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/mem.h/device_ram_update_device_ram_RAM_SP_RF_1/device_ram_update_device_ram_RAM_SP_RF_1_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/MUX_uint1_t_opcode_result_t_opcode_result_t/MUX_uint1_t_opcode_result_t_opcode_result_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/stack_ram_update/stack_ram_update_0CLK_23f04728.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/jmp/jmp_0CLK_6239a3a6.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/mem.h/draw_queue_update_draw_queue_ram_RAM_DP_RF_1/draw_queue_update_draw_queue_ram_RAM_DP_RF_1_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/and2/and2_0CLK_50b92fe2.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/ovr/ovr_0CLK_61914e8d.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/MUX_uint1_t_uint9_t_uint9_t/MUX_uint1_t_uint9_t_uint9_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/jcn2/jcn2_0CLK_12273847.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/jsr2/jsr2_0CLK_609876da.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_MINUS_uint9_t_uint9_t/BIN_OP_MINUS_uint9_t_uint9_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/sta2/sta2_0CLK_4674db74.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_PLUS_int9_t_int8_t/BIN_OP_PLUS_int9_t_int8_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_EQ_uint5_t_uint1_t/BIN_OP_EQ_uint5_t_uint1_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/sta/sta_0CLK_bce25fe8.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_OR_uint9_t_uint9_t/BIN_OP_OR_uint9_t_uint9_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/nip2/nip2_0CLK_1a2ef46d.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/add/add_0CLK_64d180f1.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/lit2/lit2_0CLK_4351dde2.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/nip/nip_0CLK_d0ab213f.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/sth/sth_0CLK_a9f1e08f.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/dup2/dup2_0CLK_e4095020.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/deo/deo_0CLK_aeeaa7f2.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/dei/dei_0CLK_11d1c5ea.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/lda/lda_0CLK_c634cda8.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/swp2/swp2_0CLK_814c2afd.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/ovr2/ovr2_0CLK_bb09c2cb.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/inc2/inc2_0CLK_180c5210.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/stz/stz_0CLK_bacf6a1d.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/mem.h/fg_vram_update_fg_vram_RAM_DP_RF_1/fg_vram_update_fg_vram_RAM_DP_RF_1_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/deo2/deo2_0CLK_ff5cce09.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/mem.h/bg_vram_update_bg_vram_RAM_DP_RF_1/bg_vram_update_bg_vram_RAM_DP_RF_1_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/div2/div2_0CLK_7c6279d3.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/gth/gth_0CLK_441a128d.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/neq/neq_0CLK_226c8821.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/equ2/equ2_0CLK_609876da.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/stz2/stz2_0CLK_75b4bee3.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/ora2/ora2_0CLK_50b92fe2.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/ldz2/ldz2_0CLK_2ab048cc.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/rot2/rot2_0CLK_8e773831.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/rot/rot_0CLK_b288bfb7.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/ldr/ldr_0CLK_5cd52163.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/jci/jci_0CLK_4351dde2.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/lth/lth_0CLK_441a128d.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/jsr/jsr_0CLK_0cbff8de.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/swp/swp_0CLK_0d289325.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/sth2/sth2_0CLK_55b6500a.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/jcn/jcn_0CLK_7e557991.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/CONST_SR_6_uint8_t/CONST_SR_6_uint8_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/mul2/mul2_0CLK_50b92fe2.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/lth2/lth2_0CLK_977cbcae.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/pop/pop_0CLK_b0b628a3.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/lit/lit_0CLK_f3f71871.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/dei2/dei2_0CLK_898867fd.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/str1/str1_0CLK_1e72bf9c.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/ora/ora_0CLK_64d180f1.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/and/and_0CLK_64d180f1.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/lda2/lda2_0CLK_19339e1d.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/sub1/sub1_0CLK_64d180f1.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/jmp2/jmp2_0CLK_d6642053.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/inc/inc_0CLK_121b1df5.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/brk/brk_0CLK_b45f1687.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/gth2/gth2_0CLK_977cbcae.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/div/div_0CLK_4e24eea7.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/jmi/jmi_0CLK_937caaea.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/mul/mul_0CLK_64d180f1.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/eor/eor_0CLK_64d180f1.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/add2/add2_0CLK_50b92fe2.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_XOR_uint1_t_uint1_t/BIN_OP_XOR_uint1_t_uint1_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/pop2/pop2_0CLK_b0b628a3.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/ldz/ldz_0CLK_b128164d.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/eor2/eor2_0CLK_50b92fe2.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/dup/dup_0CLK_d4b33a56.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/sft2/sft2_0CLK_af0d23d3.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/ldr2/ldr2_0CLK_388b52ed.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/bit_math.h/uint12_mux4/uint12_mux4_0CLK_a5a1cd4e.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/sft/sft_0CLK_8d2aa467.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/jsi/jsi_0CLK_4c8178ef.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_AND_uint8_t_uint8_t/BIN_OP_AND_uint8_t_uint8_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/str2/str2_0CLK_de602816.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/sub2/sub2_0CLK_50b92fe2.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/neq2/neq2_0CLK_609876da.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/equ/equ_0CLK_226c8821.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/MUX_uint1_t_uint4_t_uint4_t/MUX_uint1_t_uint4_t_uint4_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_OR_uint16_t_uint16_t/BIN_OP_OR_uint16_t_uint16_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/MUX_uint1_t_int4_t_int4_t/MUX_uint1_t_int4_t_int4_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_EQ_uint8_t_uint2_t/BIN_OP_EQ_uint8_t_uint2_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/sp_relative_shift/sp_relative_shift_0CLK_6f2c5aad.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_PLUS_uint16_t_uint2_t/BIN_OP_PLUS_uint16_t_uint2_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/MUX_uint1_t_device_in_result_t_device_in_result_t/MUX_uint1_t_device_in_result_t_device_in_result_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/CONST_SL_8_uint16_t/CONST_SL_8_uint16_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_EQ_uint8_t_uint3_t/BIN_OP_EQ_uint8_t_uint3_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/device_out/device_out_0CLK_415ef426.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/CONST_SR_8_uint16_t/CONST_SR_8_uint16_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_SL_uint16_t_uint8_t/BIN_OP_SL_uint16_t_uint8_t_0CLK_4b371565.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_LT_uint16_t_uint16_t/BIN_OP_LT_uint16_t_uint16_t_0CLK_380ecc95.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_GT_uint8_t_uint8_t/BIN_OP_GT_uint8_t_uint8_t_0CLK_380ecc95.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_GT_uint16_t_uint16_t/BIN_OP_GT_uint16_t_uint16_t_0CLK_380ecc95.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_DIV_uint8_t_uint8_t/BIN_OP_DIV_uint8_t_uint8_t_0CLK_371b3c10.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_INFERRED_MULT_uint16_t_uint16_t/BIN_OP_INFERRED_MULT_uint16_t_uint16_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_XOR_uint16_t_uint16_t/BIN_OP_XOR_uint16_t_uint16_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_PLUS_uint17_t_uint2_t/BIN_OP_PLUS_uint17_t_uint2_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/MUX_uint1_t_device_out_result_t_device_out_result_t/MUX_uint1_t_device_out_result_t_device_out_result_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_EQ_uint8_t_uint4_t/BIN_OP_EQ_uint8_t_uint4_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_MINUS_uint8_t_uint2_t/BIN_OP_MINUS_uint8_t_uint2_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/device_in/device_in_0CLK_c062f1e5.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_INFERRED_MULT_uint8_t_uint8_t/BIN_OP_INFERRED_MULT_uint8_t_uint8_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/u16_add_u8_as_i8/u16_add_u8_as_i8_0CLK_e595f783.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_SR_uint16_t_uint8_t/BIN_OP_SR_uint16_t_uint8_t_0CLK_9f3d501a.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/mem.h/stack_ram_update_stack_ram_RAM_SP_RF_1/stack_ram_update_stack_ram_RAM_SP_RF_1_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/CONST_SR_4_uint8_t/CONST_SR_4_uint8_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_AND_uint16_t_uint16_t/BIN_OP_AND_uint16_t_uint16_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_DIV_uint16_t_uint16_t/BIN_OP_DIV_uint16_t_uint16_t_0CLK_ccb8c834.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_LT_uint8_t_uint8_t/BIN_OP_LT_uint8_t_uint8_t_0CLK_380ecc95.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_PLUS_uint8_t_uint8_t/BIN_OP_PLUS_uint8_t_uint8_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_MINUS_uint8_t_uint8_t/BIN_OP_MINUS_uint8_t_uint8_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_SR_uint8_t_uint8_t/BIN_OP_SR_uint8_t_uint8_t_0CLK_41db8d51.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_OR_uint8_t_uint8_t/BIN_OP_OR_uint8_t_uint8_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_SL_uint8_t_uint8_t/BIN_OP_SL_uint8_t_uint8_t_0CLK_ad8922d4.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_XOR_uint8_t_uint8_t/BIN_OP_XOR_uint8_t_uint8_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_MINUS_uint16_t_uint16_t/BIN_OP_MINUS_uint16_t_uint16_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_EQ_uint12_t_uint3_t/BIN_OP_EQ_uint12_t_uint3_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_PLUS_int4_t_int4_t/BIN_OP_PLUS_int4_t_int4_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_GTE_uint16_t_uint16_t/BIN_OP_GTE_uint16_t_uint16_t_0CLK_6f2c5aad.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/system_dei/system_dei_0CLK_5e0132c5.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/CONST_SR_1_uint8_t/CONST_SR_1_uint8_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/CONST_SR_2_uint16_t/CONST_SR_2_uint16_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_GT_uint8_t_uint3_t/BIN_OP_GT_uint8_t_uint3_t_0CLK_5af1a430.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/CONST_SL_4_uint8_t/CONST_SL_4_uint8_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_GTE_uint8_t_uint8_t/BIN_OP_GTE_uint8_t_uint8_t_0CLK_6f2c5aad.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_GT_uint8_t_uint4_t/BIN_OP_GT_uint8_t_uint4_t_0CLK_5af1a430.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/screen_dei/screen_dei_0CLK_d7085478.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/CONST_SL_2_uint16_t/CONST_SL_2_uint16_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/generic_dei/generic_dei_0CLK_25f4cd11.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_MINUS_int17_t_int17_t/BIN_OP_MINUS_int17_t_int17_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_MINUS_uint12_t_uint1_t/BIN_OP_MINUS_uint12_t_uint1_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_PLUS_uint16_t_uint8_t/BIN_OP_PLUS_uint16_t_uint8_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_EQ_uint12_t_uint12_t/BIN_OP_EQ_uint12_t_uint12_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/datetime_dei/datetime_dei_0CLK_24541ec2.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/emu_deo/emu_deo_0CLK_6aa3048f.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/controller_dei/controller_dei_0CLK_336c9a77.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/CONST_SL_1_uint8_t/CONST_SL_1_uint8_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/CONST_SL_2_uint8_t/CONST_SL_2_uint8_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/CONST_SL_4_uint16_t/CONST_SL_4_uint16_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_MINUS_int9_t_int9_t/BIN_OP_MINUS_int9_t_int9_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/CONST_SR_1_uint16_t/CONST_SR_1_uint16_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/VAR_REF_RD_uint1_t_uint1_t_16_VAR_d41d/VAR_REF_RD_uint1_t_uint1_t_16_VAR_d41d_0CLK_763c90e8.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/CONST_SR_4_uint16_t/CONST_SR_4_uint16_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/CONST_SL_1_uint16_t/CONST_SL_1_uint16_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/CONST_SR_2_uint8_t/CONST_SR_2_uint8_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/bit_math.h/uint1_mux16/uint1_mux16_0CLK_4e6656cf.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_MINUS_int5_t_int5_t/BIN_OP_MINUS_int5_t_int5_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/screen_deo/screen_deo_0CLK_6a7aa1ba.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/CONST_SR_3_uint8_t/CONST_SR_3_uint8_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_MINUS_int4_t_int4_t/BIN_OP_MINUS_int4_t_int4_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/pixel_deo/pixel_deo_0CLK_324ea393.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/sprite_deo/sprite_deo_0CLK_09b4e649.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/MUX_uint1_t_screen_blit_result_t_screen_blit_result_t/MUX_uint1_t_screen_blit_result_t_screen_blit_result_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_MINUS_uint12_t_uint12_t/BIN_OP_MINUS_uint12_t_uint12_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_MINUS_uint16_t_uint8_t/BIN_OP_MINUS_uint16_t_uint8_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/CONST_SL_8_uint8_t/CONST_SL_8_uint8_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_MINUS_uint12_t_uint3_t/BIN_OP_MINUS_uint12_t_uint3_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/screen_1bpp/screen_1bpp_0CLK_72b59ec3.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_OR_uint8_t_uint16_t/BIN_OP_OR_uint8_t_uint16_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_PLUS_uint4_t_uint1_t/BIN_OP_PLUS_uint4_t_uint1_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/screen_2bpp/screen_2bpp_0CLK_7c567d05.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_MINUS_uint16_t_uint1_t/BIN_OP_MINUS_uint16_t_uint1_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_EQ_uint3_t_uint3_t/BIN_OP_EQ_uint3_t_uint3_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/VAR_REF_RD_uint2_t_uint2_t_48_VAR_d41d/VAR_REF_RD_uint2_t_uint2_t_48_VAR_d41d_0CLK_f9daebf3.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_MINUS_uint5_t_uint1_t/BIN_OP_MINUS_uint5_t_uint1_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/VAR_REF_RD_uint8_t_uint8_t_8_VAR_d41d/VAR_REF_RD_uint8_t_uint8_t_8_VAR_d41d_0CLK_814e9c60.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/VAR_REF_RD_uint8_t_uint8_t_80_VAR_d41d/VAR_REF_RD_uint8_t_uint8_t_80_VAR_d41d_0CLK_4b00ae23.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_PLUS_uint16_t_uint12_t/BIN_OP_PLUS_uint16_t_uint12_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/VAR_REF_RD_uint8_t_uint8_t_16_VAR_d41d/VAR_REF_RD_uint8_t_uint8_t_16_VAR_d41d_0CLK_e799c7f1.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/MUX_uint1_t_uint8_t_8_uint8_t_8/MUX_uint1_t_uint8_t_8_uint8_t_8_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/MUX_uint1_t_uint8_t_16_uint8_t_16/MUX_uint1_t_uint8_t_16_uint8_t_16_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_EQ_uint3_t_uint2_t/BIN_OP_EQ_uint3_t_uint2_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/VAR_REF_ASSIGN_uint8_t_uint8_t_8_VAR_52b8/VAR_REF_ASSIGN_uint8_t_uint8_t_8_VAR_52b8_0CLK_83e31706.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/VAR_REF_ASSIGN_uint8_t_uint8_t_16_VAR_7a60/VAR_REF_ASSIGN_uint8_t_uint8_t_16_VAR_7a60_0CLK_6481cb28.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/bit_math.h/uint2_mux64/uint2_mux64_0CLK_9ff5fd8d.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_EQ_uint4_t_uint2_t/BIN_OP_EQ_uint4_t_uint2_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/bit_math.h/uint8_mux16/uint8_mux16_0CLK_4e6656cf.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_EQ_uint4_t_uint3_t/BIN_OP_EQ_uint4_t_uint3_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/bit_math.h/uint8_mux128/uint8_mux128_0CLK_9347d63d.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/built_in/BIN_OP_EQ_uint3_t_uint1_t/BIN_OP_EQ_uint3_t_uint1_t_0CLK_de264c78.vhd
+set_global_assignment -name VHDL_FILE core/pipelinec_output_uxn.c_1/bit_math.h/uint8_mux8/uint8_mux8_0CLK_098d5770.vhd

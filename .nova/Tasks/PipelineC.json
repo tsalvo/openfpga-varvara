@@ -1,0 +1,13 @@
+{
+  "actions" : {
+    "build" : {
+      "enabled" : true,
+      "script" : "#!\/bin\/sh\nrm -rf varvara-fpga\/pipelinec_output_uxn.c_1\nsleep 1\nrm varvara-fpga\/lextab.py\nrm varvara-fpga\/yacctab.py\nrm varvara-fpga\/work-obj08.cf\nsleep 1\nopen -a docker && while ! docker info > \/dev\/null 2>&1; do sleep 1 ; done\ndocker run --rm -v $(pwd)\/varvara-fpga:\/workdir pipelinec uxn.c\nsleep 1\nrm -rf .\/src\/fpga\/core\/pipelinec_output_uxn.c_1\/\nmv -f .\/varvara-fpga\/pipelinec_output_uxn.c_1\/ .\/src\/fpga\/core\/pipelinec_output_uxn.c_1\/"
+    },
+    "clean" : {
+      "enabled" : true,
+      "script" : "#!\/bin\/sh\nrm -rf varvara-fpga\/pipelinec_output_uxn.c_1\nsleep 1\nrm varvara-fpga\/lextab.py\nrm varvara-fpga\/yacctab.py\nrm varvara-fpga\/work-obj08.cf\nsleep 1"
+    }
+  },
+  "openLogOnRun" : "start"
+}
