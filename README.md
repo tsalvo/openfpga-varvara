@@ -2,6 +2,9 @@
 
 A core for Analogue Pocket that integrates the VHDL output of [varvara-fpga](https://github.com/tsalvo/varvara-fpga) (which is still an early work-in-progress [PipelineC](https://github.com/JulianKemmerer/PipelineC) FPGA implementation of [Varvara / Uxn](https://100r.co/site/uxn.html) by [Hundred Rabbits](https://100r.co/site/home.html)).
 
+### Screenshots
+![Tet](/screenshots/tet.png?raw=true) ![Flappy Bird](/screenshots/flappy_bird.png?raw=true) ![Donsol](/screenshots/donsol.png?raw=true) ![Amiga](/screenshots/amiga.png?raw=true)
+
 ## Running the core on an Analogue Pocket
 
 Unzip the latest core from the _Releases_ section, and copy + merge the `Assets`, `Cores`, and `Platforms` folders to your Analogue Pocket SD Card.
@@ -10,7 +13,7 @@ Unzip the latest core from the _Releases_ section, and copy + merge the `Assets`
 
 - Display: 256x256 at 60Hz
 - CPU: 19.4616 MHz
-- Main RAM: 64KB Main RAM
+- Main RAM: 64 KB
 - Stack RAM: 2x 256 bytes
 - Device RAM: 256 bytes
 
