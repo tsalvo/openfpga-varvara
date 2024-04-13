@@ -695,18 +695,6 @@ mf_pllbase mp1 (
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // Settings
-reg is_double_buffer_enabled = 0;
-
-// Synced settings
-wire is_double_buffer_enabled_s;
-
-synch_3 #(
-    .WIDTH(1)
-) internal_s (
-    is_double_buffer_enabled,
-    is_double_buffer_enabled_s,
-    clk_core_19_1232
-);
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // Controls
