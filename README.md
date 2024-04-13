@@ -12,7 +12,7 @@ Unzip the latest core from the _Releases_ section, and copy + merge the `Assets`
 ## Specs
 
 - Display: 256x256 at 60Hz
-- CPU: 19.4616 MHz
+- CPU: 19.87776 MHz
 - Main RAM: 64 KB
 - Stack RAM: 2x 256 bytes
 - Device RAM: 256 bytes
