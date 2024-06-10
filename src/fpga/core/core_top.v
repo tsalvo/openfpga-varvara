@@ -694,7 +694,16 @@ mf_pllbase mp1 (
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
-// Settings
+// Real Time Clock
+wire [32:0] rtc_time_bcd_s;
+
+synch_3 #(
+    .WIDTH(33)
+) rtc_bcd_s (
+    {rtc_valid, rtc_time_bcd},
+    rtc_time_bcd_s,
+    clk_core_19_1232
+);
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // Controls
@@ -713,6 +722,7 @@ synch_3 #(
 top top
 (
     .clk_None(clk_core_19_1232),
+    .uxn_top_rtc_time_bcd(rtc_time_bcd_s),
     .uxn_top_controller0_up(cont1_key_s[0]),
     .uxn_top_controller0_down(cont1_key_s[1]),
     .uxn_top_controller0_left(cont1_key_s[2]),
