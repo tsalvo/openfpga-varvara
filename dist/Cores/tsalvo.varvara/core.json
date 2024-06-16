@@ -7,7 +7,7 @@
             "description": "Computer system running on Uxn",
             "author": "tsalvo",
             "url": "https://github.com/tsalvo/openfpga-varvara",
-            "version": "0.0.2",
+            "version": "0.0.3",
             "date_release": "2024-04-06"
         },
         "framework": {
