@@ -35,7 +35,7 @@ Many Varvara device features aren't implemented:
 - console
 
 Some Varvara devices are only partially implemented:
-- datetime uses a hard-coded date
+- datetime returns the current HH:MM:SS, but not YYYY:MM:DD
 - system doesn't implement the expansion port
 
 ROMs must be 65280 bytes or less.
