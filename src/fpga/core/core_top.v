@@ -625,6 +625,14 @@ always @(posedge clk_74a) begin
         audgen_mclk <= ~audgen_mclk;
         audgen_accum <= audgen_accum - 21'd742500 + CYCLE_48KHZ;
     end
+    
+    if (bridge_wr) begin
+      casex (bridge_addr)
+        32'h10000200: begin
+          is_mouse_toggle_enabled <= bridge_wr_data[0];
+        end
+      endcase
+    end
 end
 
 // generate SCLK = 3.072mhz by dividing MCLK by 4
@@ -706,6 +714,21 @@ synch_3 #(
 );
 
 ////////////////////////////////////////////////////////////////////////////////////////
+// Settings
+reg is_mouse_toggle_enabled = 0;
+
+// Synced settings
+wire is_mouse_toggle_enabled_s;
+
+synch_3 #(
+    .WIDTH(1)
+) internal_s (
+    is_mouse_toggle_enabled,
+    is_mouse_toggle_enabled_s,
+    clk_core_19_1232
+);
+
+////////////////////////////////////////////////////////////////////////////////////////
 // Controls
 wire [31:0] cont1_key_s;
 
@@ -736,6 +759,7 @@ top top
     .uxn_top_controller0_r(cont1_key_s[9]),
     .uxn_top_controller0_select(cont1_key_s[14]),
     .uxn_top_controller0_start(cont1_key_s[15]),
+    .uxn_top_mouse_toggle(is_mouse_toggle_enabled_s),
     .uxn_top_vsync(vidout_vs),
     .uxn_top_hsync(vidout_hs),
     .uxn_top_is_visible_pixel(vidout_de),
