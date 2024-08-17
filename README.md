@@ -29,7 +29,6 @@ ROMs may need to be padded with additional empty bytes (0x00) to be an even mult
 
 Many Varvara device features aren't implemented:
 - audio
-- mouse
 - keyboard
 - file system
 - console
