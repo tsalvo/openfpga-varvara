@@ -25,4 +25,5 @@ cr_ie_info.json
 *.xml
 *.sld
 *.cdf
+apf/build_id.mif
 

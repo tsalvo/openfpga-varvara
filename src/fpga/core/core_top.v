@@ -490,28 +490,17 @@ core_bridge_cmd icb (
 
 );
 
-
-
 ////////////////////////////////////////////////////////////////////////////////////////
-
-// UXN PipelineC Module Input / Output
-// synchronous to clk_core_19_1232
-wire [15:0] uxn_c_out;
-
-////////////////////////////////////////////////////////////////////////////////////////
-// video generation
-// ~15,242,400 hz pixel clock
 //
-// we want our video mode of 320x240 @ 60hz, this results in 204800 clocks per frame
+// video generation
+// ~12,384,000 hz pixel clock
+//
+// we want our video mode of 320x288 @ 60hz, this results in 206400 clocks per frame
 // we need to add hblank and vblank times to this, so there will be a nondisplay area. 
 // it can be thought of as a border around the visible area.
-// to make numbers simple, we can have 400 total clocks per line, and 320 visible.
-// dividing 204800 by 400 results in 512 total lines per frame, and 240 visible.
-// this pixel clock is fairly high for the relatively low resolution, but that's fine.
-// PLL output has a minimum output frequency anyway.
 
-assign video_rgb_clock = clk_core_19_1232;
-assign video_rgb_clock_90 = clk_core_19_1232_90deg;
+assign video_rgb_clock = clk_core_pixel;
+assign video_rgb_clock_90 = clk_core_pixel_90deg;
 assign video_rgb = vidout_rgb;
 assign video_de = vidout_de;
 assign video_skip = vidout_skip;
@@ -519,23 +508,26 @@ assign video_vs = vidout_vs;
 assign video_hs = vidout_hs;
 
     localparam  VID_V_BPORCH = 'd10;
-    localparam  VID_V_ACTIVE = 'd256;
-    localparam  VID_V_TOTAL = 'd800;
+    localparam  VID_V_ACTIVE = 'd288;
+    localparam  VID_V_TOTAL = 'd600;
     localparam  VID_H_BPORCH = 'd10;
-    localparam  VID_H_ACTIVE = 'd256;
-    localparam  VID_H_TOTAL = 'd400;
+    localparam  VID_H_ACTIVE = 'd320;
+    localparam  VID_H_TOTAL = 'd344;
 
-    reg [3:0] uxn_c_current_pixel_r;
-    reg [3:0] uxn_c_current_pixel_g;
-    reg [3:0] uxn_c_current_pixel_b;
-
-    reg [15:0]  frame_count;
-    
     reg [9:0]   x_count;
     reg [9:0]   y_count;
     
     wire [9:0]  visible_x = x_count - VID_H_BPORCH;
     wire [9:0]  visible_y = y_count - VID_V_BPORCH;
+    
+    reg [7:0]  pxl_device_ram_read_addr;
+    reg [16:0] vram_read_addr;
+    
+    reg has_set_palette = 0;
+    reg [11:0] color_0 = 0;
+    reg [11:0] color_1 = 0;
+    reg [11:0] color_2 = 0;
+    reg [11:0] color_3 = 0;
 
     reg [23:0]  vidout_rgb;
     reg         vidout_de, vidout_de_1;
@@ -543,7 +535,7 @@ assign video_hs = vidout_hs;
     reg         vidout_vs;
     reg         vidout_hs, vidout_hs_1;
 
-always @(posedge clk_core_19_1232 or negedge reset_n) begin
+always @(posedge clk_core_pixel or negedge reset_n) begin
 
     if(~reset_n) begin
     
@@ -551,19 +543,13 @@ always @(posedge clk_core_19_1232 or negedge reset_n) begin
         y_count <= 0;
         
     end else begin
-    
-        uxn_c_current_pixel_r <= uxn_c_out[11:8];
-        uxn_c_current_pixel_g <= uxn_c_out[7:4];
-        uxn_c_current_pixel_b <= uxn_c_out[3:0];
-        vidout_de_1 <= vidout_de;
-    
         vidout_de <= 0;
         vidout_skip <= 0;
         vidout_vs <= 0;
         vidout_hs <= 0;
         
         vidout_hs_1 <= vidout_hs;
-        
+        vidout_de_1 <= vidout_de;
         // x and y counters
         x_count <= x_count + 1'b1;
         if(x_count == VID_H_TOTAL-1) begin
@@ -575,12 +561,53 @@ always @(posedge clk_core_19_1232 or negedge reset_n) begin
             end
         end
         
-        // generate sync 
-        if(x_count == 0 && y_count == 0) begin
+        if (y_count == 0) begin // generate vsync and read palette colors on line 0
+         case (x_count)
+         0: begin
+            // generate sync 
             // sync signal in back porch
             // new frame
             vidout_vs <= 1;
-            frame_count <= frame_count + 1'b1;
+            vram_read_addr <= 0;
+            pxl_device_ram_read_addr <= 8'h08; // Red (hi byte)
+         end
+         1: begin
+            pxl_device_ram_read_addr <= 8'h09; // Red (lo byte)
+         end
+         2: begin
+            color_0[11:8] <= pxl_device_ram_read_value[7:4];
+            color_1[11:8] <= pxl_device_ram_read_value[3:0];
+            pxl_device_ram_read_addr <= 8'h0A; // Green (hi byte)
+         end
+         3: begin
+            color_2[11:8] <= pxl_device_ram_read_value[7:4];
+            color_3[11:8] <= pxl_device_ram_read_value[3:0];
+            pxl_device_ram_read_addr <= 8'h0B; // Green (lo byte)
+         end
+         4: begin
+            color_0[7:4] <= pxl_device_ram_read_value[7:4];
+            color_1[7:4] <= pxl_device_ram_read_value[3:0];
+            pxl_device_ram_read_addr <= 8'h0C; // Blue (hi byte)
+            has_set_palette <= color_0 == 12'h000 ? has_set_palette : 1;
+         end
+         5: begin
+            color_2[7:4] <= pxl_device_ram_read_value[7:4];
+            color_3[7:4] <= pxl_device_ram_read_value[3:0];
+            pxl_device_ram_read_addr <= 8'h0D; // Blue (lo byte)
+            has_set_palette <= color_1 == 12'h000 ? has_set_palette : 1;
+         end
+         6: begin
+            color_0[3:0] <= pxl_device_ram_read_value[7:4];
+            color_1[3:0] <= pxl_device_ram_read_value[3:0];
+            pxl_device_ram_read_addr <= 8'h00;
+            has_set_palette <= color_2 == 12'h000 ? has_set_palette : 1;
+         end
+         7: begin
+            color_2[3:0] <= pxl_device_ram_read_value[7:4];
+            color_3[3:0] <= pxl_device_ram_read_value[3:0];
+            has_set_palette <= color_3 == 12'h000 ? has_set_palette : 1;
+         end
+         endcase
         end
         
         // we want HS to occur a bit after VS, not on the same cycle
@@ -593,18 +620,103 @@ always @(posedge clk_core_19_1232 or negedge reset_n) begin
         // inactive screen areas are black
         vidout_rgb <= 24'h0;
         // generate active video
-        if(x_count >= VID_H_BPORCH && x_count < VID_H_ACTIVE+VID_H_BPORCH) begin
+        if(y_count >= VID_V_BPORCH && y_count < VID_V_ACTIVE+VID_V_BPORCH) begin
 
-            if(y_count >= VID_V_BPORCH && y_count < VID_V_ACTIVE+VID_V_BPORCH) begin
+            // read from VRAM a little ahead of where we draw
+            if(x_count >= (VID_H_BPORCH - 1) && x_count < (VID_H_ACTIVE + VID_H_BPORCH - 1)) begin
+               vram_read_addr <= vram_read_addr + 1;
+            end
+            
+            if(x_count >= VID_H_BPORCH && x_count < VID_H_ACTIVE+VID_H_BPORCH) begin
                 // data enable. this is the active region of the line
                 vidout_de <= 1;
-                vidout_rgb[23:20] <= uxn_c_current_pixel_r;
-                vidout_rgb[15:12] <= uxn_c_current_pixel_g;
-                vidout_rgb[7:4] <= uxn_c_current_pixel_b;
-            end 
-        end
+                
+                case(uxn_vram_read_value)
+                2'd0: begin
+                    vidout_rgb <= has_set_palette ? {color_0[11:8], 4'h0, color_0[7:4], 4'h0, color_0[3:0], 4'h0} : 24'hF0F0F0;
+                end
+                2'd1: begin
+                    vidout_rgb <= has_set_palette ? {color_1[11:8], 4'h0, color_1[7:4], 4'h0, color_1[3:0], 4'h0} : 24'h000000;
+                end
+                2'd2: begin
+                    vidout_rgb <= has_set_palette ? {color_2[11:8], 4'h0, color_2[7:4], 4'h0, color_2[3:0], 4'h0} : 24'h70D0B0;
+                end
+                2'd3: begin
+                    vidout_rgb <= has_set_palette ? {color_3[11:8], 4'h0, color_3[7:4], 4'h0, color_3[3:0], 4'h0} : 24'hF06020;
+                end
+                endcase
+            end
+        end 
     end
 end
+
+///////////////////////////////////////////////////////////////////////////////
+// VRAM Controller
+// 
+// TODO: use auto-sync counting instead of hard-coded values
+localparam  VRAM_COPY_CYCLE_BEGIN = 24'd2053491;
+localparam  VRAM_COPY_CYCLE_END = 24'd2145655;
+
+reg vram_last_cycle_count_latch = 0;
+reg vram_cycle_count_latch = 0;
+reg inner_cycle_count_latch = 0;
+reg vram_last_vsync = 0;
+reg did_copy_buffer;
+reg [23:0] vram_cycle = 0;
+reg [23:0] vram_copy_cycle_start = 0;
+reg [23:0] vram_copy_cycle_end = 0;
+reg [16:0] layer_vram_read_addr;
+reg [16:0] vram_write_addr;
+reg vram_write_enable = 0;
+reg [1:0] vram_write_value;
+always @ (posedge clk_core_vram)
+begin
+   vram_cycle <= vidout_vs_vram_s ? 0 : vram_cycle + 1;
+   vram_last_vsync <= vidout_vs_vram_s;
+   inner_cycle_count_latch <= inner_cycle_count_latch ? 1 : ~vram_last_vsync & vidout_vs_vram_s;
+   vram_cycle_count_latch <= vram_cycle_count_latch ? 1 : inner_cycle_count_latch & ~vram_last_vsync & vidout_vs_vram_s;
+   
+   case (vram_cycle_count_latch)
+   0: begin
+      vram_write_enable <= 0;
+      vram_write_value <= 0;
+      layer_vram_read_addr <= 0;
+      vram_write_addr <= 0;
+   end
+   1: begin
+      case (vram_cycle) 
+      VRAM_COPY_CYCLE_BEGIN: begin
+         vram_write_enable <= ~is_drawing_busy_s;
+         did_copy_buffer <= ~is_drawing_busy_s;
+         vram_write_value <= 0;
+         layer_vram_read_addr <= 17'd0;
+         vram_write_addr <= 17'd131070;
+      end
+      VRAM_COPY_CYCLE_END: begin
+         vram_write_enable <= 0;
+         vram_write_value <= 0;
+         layer_vram_read_addr <= 0;
+         vram_write_addr <= 0;
+      end
+      default: begin
+         case (vram_write_enable)
+         0: begin
+            vram_write_value <= 0;
+            layer_vram_read_addr <= 0;
+            vram_write_addr <= 0;
+         end
+         1: begin
+            layer_vram_read_addr <= layer_vram_read_addr + 1;
+            vram_write_addr <= vram_write_addr + 1;
+            vram_write_value <= uxn_vram_fg_read_value == 0 ? uxn_vram_bg_read_value : uxn_vram_fg_read_value;
+         end
+         endcase
+      end
+      endcase
+   end
+   endcase   
+end
+
 
 //
 // audio i2s silence generator
@@ -627,12 +739,12 @@ always @(posedge clk_74a) begin
     end
     
     if (bridge_wr) begin
-      casex (bridge_addr)
-        32'h10000200: begin
-          is_mouse_toggle_enabled <= bridge_wr_data[0];
-        end
-      endcase
-    end
+       casex (bridge_addr)
+         32'h10000200: begin
+           is_mouse_toggle_enabled <= bridge_wr_data[0];
+         end
+       endcase
+     end
 end
 
 // generate SCLK = 3.072mhz by dividing MCLK by 4
@@ -660,6 +772,7 @@ always @(negedge audgen_sclk) begin
     end 
 end
 
+///////////////////////////////////////////////
 
 wire        ioctl_wr;
 wire [15:0] ioctl_addr;
@@ -669,7 +782,7 @@ data_loader #(
     .WRITE_MEM_CLOCK_DELAY(4)
 ) rom_loader (
     .clk_74a(clk_74a),
-    .clk_memory(clk_core_19_1232),
+    .clk_memory(clk_core_uxn),
 
     .bridge_wr(bridge_wr),
     .bridge_endian_little(bridge_endian_little),
@@ -682,9 +795,10 @@ data_loader #(
 );
 
 ///////////////////////////////////////////////
-
-    wire    clk_core_19_1232;
-    wire    clk_core_19_1232_90deg;
+    wire    clk_core_pixel;
+    wire    clk_core_pixel_90deg;
+    wire    clk_core_uxn;
+    wire    clk_core_vram;
     
     wire    pll_core_locked;
     wire    pll_core_locked_s;
@@ -694,23 +808,65 @@ mf_pllbase mp1 (
     .refclk         ( clk_74a ),
     .rst            ( 0 ),
     
-    .outclk_0       ( clk_core_19_1232 ),
-    .outclk_1       ( clk_core_19_1232_90deg ),
+    .outclk_0       ( clk_core_pixel ),
+    .outclk_1       ( clk_core_pixel_90deg ),
+    .outclk_2       ( clk_core_uxn ),
+    .outclk_3       ( clk_core_vram ),
+    
     
     .locked         ( pll_core_locked )
 );
 
+////////////////////////////////////////////////////////////////////////////////////////
+// VSYNC
+wire is_drawing_busy_s;
+synch_2 #(
+    .WIDTH(1)
+) drawing_busy (
+    is_screen_vector_running | ~is_draw_queue_ready,
+    is_drawing_busy_s,
+    clk_core_vram
+);
+
+wire did_copy_buffer_s;
+synch_2 #(
+    .WIDTH(1)
+) dcb_s (
+    did_copy_buffer,
+    did_copy_buffer_s,
+    clk_core_uxn
+);
+
+wire vidout_vs_s;
+synch_2 #(
+    .WIDTH(1)
+) vsync_s (
+    vidout_vs,
+    vidout_vs_s,
+    clk_core_uxn
+);
+
+wire vidout_vs_vram_s;
+synch_2 #(
+    .WIDTH(2)
+) vsync_vram_s (
+    vidout_vs,
+    vidout_vs_vram_s,
+    clk_core_vram
+);
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // Real Time Clock
-wire [32:0] rtc_valid_time_bcd_s;
+wire rtc_valid_s;
+wire [31:0] rtc_date_bcd_s;
+wire [31:0] rtc_time_bcd_s;
 
 synch_3 #(
-    .WIDTH(33)
+    .WIDTH(65)
 ) rtc_bcd_s (
-    {rtc_valid, rtc_time_bcd},
-    rtc_valid_time_bcd_s,
-    clk_core_19_1232
+    {rtc_valid, rtc_date_bcd, rtc_time_bcd}, // rtc_time_bcd rtc_date_bcd
+    {rtc_valid_s, rtc_date_bcd_s, rtc_time_bcd_s},
+    clk_core_uxn
 );
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -725,7 +881,7 @@ synch_3 #(
 ) internal_s (
     is_mouse_toggle_enabled,
     is_mouse_toggle_enabled_s,
-    clk_core_19_1232
+    clk_core_uxn
 );
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -737,36 +893,199 @@ synch_3 #(
 ) cont1_s (
     cont1_key,
     cont1_key_s,
-    clk_core_19_1232
+    clk_core_uxn
 );
 
-////////////////////////////////////////////////////////////////////////////////////////
-// Uxn Top-level Module (from PipelineC)
-top top
-(
-    .clk_None(clk_core_19_1232),
-    .uxn_top_rtc_valid(rtc_valid_time_bcd_s[32]),
-    .uxn_top_rtc_time_bcd(rtc_valid_time_bcd_s[31:0]),
-    .uxn_top_controller0_up(cont1_key_s[0]),
-    .uxn_top_controller0_down(cont1_key_s[1]),
-    .uxn_top_controller0_left(cont1_key_s[2]),
-    .uxn_top_controller0_right(cont1_key_s[3]),
-    .uxn_top_controller0_a(cont1_key_s[4]),
-    .uxn_top_controller0_b(cont1_key_s[5]),
-    .uxn_top_controller0_x(cont1_key_s[6]),
-    .uxn_top_controller0_y(cont1_key_s[7]),
-    .uxn_top_controller0_l(cont1_key_s[8]),
-    .uxn_top_controller0_r(cont1_key_s[9]),
-    .uxn_top_controller0_select(cont1_key_s[14]),
-    .uxn_top_controller0_start(cont1_key_s[15]),
-    .uxn_top_mouse_toggle(is_mouse_toggle_enabled_s),
-    .uxn_top_vsync(vidout_vs),
-    .uxn_top_hsync(vidout_hs),
-    .uxn_top_is_visible_pixel(vidout_de),
-    .uxn_top_rom_load_valid_byte(ioctl_wr),
-    .uxn_top_rom_load_address(ioctl_addr),
-    .uxn_top_rom_load_value(ioctl_dout),
-    .uxn_top_return_output(uxn_c_out)
+
+wire [1:0]  uxn_vram_bg_read_value;
+wire [1:0]  uxn_vram_fg_read_value;
+wire [1:0]  uxn_vram_read_value;
+wire [7:0]  uxn_main_ram_read_value_a;
+wire [7:0]  uxn_main_ram_read_value_b;
+wire [7:0]  uxn_stack_ram_read_value_a;
+wire [7:0]  uxn_stack_ram_read_value_b;
+wire [7:0]  uxn_device_ram_read_value;
+wire [7:0]  pxl_device_ram_read_value;
+
+wire        layer_vram_write_en;
+wire        layer_vram_write_layer;
+wire [16:0] layer_vram_write_addr;
+wire [1:0]  layer_vram_write_value;
+wire        main_ram_write_en_a;
+wire [15:0] main_ram_addr_a;
+wire [15:0] main_ram_addr_b;
+wire [7:0]  main_ram_write_value_a;
+wire        stack_ram_write_en_a;
+wire        stack_ram_write_en_b;
+wire [8:0]  stack_ram_addr_a;
+wire [8:0]  stack_ram_addr_b;
+wire [7:0]  stack_ram_write_value_a;
+wire [7:0]  stack_ram_write_value_b;
+wire        device_ram_write_en;
+wire [7:0]  device_ram_addr;
+wire [7:0]  device_ram_write_value;
+wire        queue_write_enable;
+wire [23:0] queue_write_value;
+wire        is_screen_vector_running;
+wire        is_draw_queue_ready;
+
+wire        queue_ram_write_enable;
+wire [11:0] queue_ram_wr_addr;
+wire [23:0] queue_ram_write_value;
+wire [11:0] queue_ram_rd_addr;
+
+wire [23:0] uxn_queue_bg_ram_read_value;
+wire [23:0] uxn_queue_fg_ram_read_value;
+
+uxn_cpu uxn_cpu (
+    // input
+    .cpu_clock(clk_core_uxn),
+    .vsync(vidout_vs_s),
+    .rtc_valid(rtc_valid_s),
+    .rtc_date_bcd(rtc_date_bcd_s[31:0]),
+    .rtc_time_bcd(rtc_time_bcd_s[31:0]),
+    .mouse_enable(is_mouse_toggle_enabled_s),
+    .controller0({cont1_key_s[3:0], cont1_key_s[15:14], cont1_key_s[5:4]}),
+    .main_ram_read_value(uxn_main_ram_read_value_a),
+    .stack_ram_read_value_a(uxn_stack_ram_read_value_a),
+    .stack_ram_read_value_b(uxn_stack_ram_read_value_b),
+    .device_ram_read_value(uxn_device_ram_read_value),
+    .boot_read_address(ioctl_addr),
+    .boot_read_value(ioctl_dout),
+    .boot_valid_byte(ioctl_wr),
+    .is_draw_queue_ready(is_draw_queue_ready),
+    .did_copy_buffer(did_copy_buffer_s),
+
+    // output
+    .main_ram_write_enable(main_ram_write_en_a),
+    .main_ram_addr(main_ram_addr_a),
+    .main_ram_write_value(main_ram_write_value_a),
+    .stack_ram_write_enable_a(stack_ram_write_en_a),
+    .stack_ram_write_enable_b(stack_ram_write_en_b),
+    .stack_ram_addr_a(stack_ram_addr_a),
+    .stack_ram_addr_b(stack_ram_addr_b),
+    .stack_ram_write_value_a(stack_ram_write_value_a),
+    .stack_ram_write_value_b(stack_ram_write_value_b),
+    .device_ram_write_enable(device_ram_write_en),
+    .device_ram_addr(device_ram_addr),
+    .device_ram_write_value(device_ram_write_value),
+    .queue_write_enable(queue_write_enable),
+    .queue_write_value(queue_write_value),
+    .is_screen_vector_running(is_screen_vector_running)
+);
+
+uxn_draw_queue uxn_draw_queue (
+   // input
+   .data(queue_write_value),
+   .we(queue_write_enable),
+   .main_ram_read_value(uxn_main_ram_read_value_b),
+   .queue_ram_read_value(uxn_queue_bg_ram_read_value),
+   .clk(clk_core_uxn),
+   
+   // output
+   .main_ram_addr(main_ram_addr_b),
+   .queue_ram_write_enable(queue_ram_write_enable),
+   .queue_ram_wr_addr(queue_ram_wr_addr),
+   .queue_ram_write_value(queue_ram_write_value),
+   .queue_ram_rd_addr(queue_ram_rd_addr),
+   .vram_write_enable(layer_vram_write_en),
+   .vram_write_layer(layer_vram_write_layer),
+   .vram_write_addr(layer_vram_write_addr),
+   .vram_write_value(layer_vram_write_value),
+   .is_queue_empty(is_draw_queue_ready)
+);
+
+uxn_queue_ram_dp uxn_queue_ram (
+   // input
+   .data(queue_ram_write_value),
+   .wr_addr(queue_ram_wr_addr),
+   .we(queue_ram_write_enable),
+   .rd_addr(queue_ram_rd_addr),
+   .clk(clk_core_uxn),
+   
+   // output
+   .q(uxn_queue_bg_ram_read_value)
+);
+
+uxn_vram uxn_vram_bg (
+    // input
+   .write_value(layer_vram_write_value),
+   .read_addr(layer_vram_read_addr),
+   .write_addr(layer_vram_write_addr),
+   .write_enable(layer_vram_write_en & ~layer_vram_write_layer),
+   .read_clock(clk_core_vram),
+   .write_clock(clk_core_uxn),
+   
+   // output
+   .read_value(uxn_vram_bg_read_value)
+);
+
+uxn_vram uxn_vram_fg (
+    // input
+   .write_value(layer_vram_write_value),
+   .read_addr(layer_vram_read_addr),
+   .write_addr(layer_vram_write_addr),
+   .write_enable(layer_vram_write_en & layer_vram_write_layer),
+   .read_clock(clk_core_vram),
+   .write_clock(clk_core_uxn),
+   
+   // output
+   .read_value(uxn_vram_fg_read_value)
+);
+
+uxn_vram uxn_vram (
+    // input
+   .write_value(vram_write_value),
+   .read_addr(vram_read_addr),
+   .write_addr(vram_write_addr),
+   .write_enable(vram_write_enable),
+   .read_clock(clk_core_pixel),
+   .write_clock(clk_core_vram),
+   
+   // output
+   .read_value(uxn_vram_read_value)
+);
+
+uxn_main_ram_dp uxn_main_ram (
+    // input
+    .data_a(main_ram_write_value_a),
+    .addr_a(main_ram_addr_a),
+    .addr_b(main_ram_addr_b),
+    .we_a(main_ram_write_en_a),
+    .clk(clk_core_uxn),
+    
+    // output
+    .q_a(uxn_main_ram_read_value_a),
+    .q_b(uxn_main_ram_read_value_b)
+);
+
+uxn_stack_ram_dp uxn_stack_ram_dp (
+   // input
+   .data_a(stack_ram_write_value_a),
+   .data_b(stack_ram_write_value_b),
+   .addr_a(stack_ram_addr_a),
+   .addr_b(stack_ram_addr_b),
+   .we_a(stack_ram_write_en_a),
+   .we_b(stack_ram_write_en_b),
+   .clk(clk_core_uxn),
+   
+   // output
+   .q_a(uxn_stack_ram_read_value_a),
+   .q_b(uxn_stack_ram_read_value_b)
+);
+
+uxn_device_ram_dp uxn_device_ram (
+    // input
+   .data_a(device_ram_write_value),
+   .addr_a(device_ram_addr),
+   .addr_b(pxl_device_ram_read_addr),
+   .we_a(device_ram_write_en),
+   .clk_a(clk_core_uxn),
+   .clk_b(clk_core_pixel),
+   
+   // output
+   .q_a(uxn_device_ram_read_value),
+   .q_b(pxl_device_ram_read_value)
 );
     
 endmodule

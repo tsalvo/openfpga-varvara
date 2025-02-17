@@ -31,20 +31,20 @@ module  mf_pllbase_0002(
 		.reference_clock_frequency("74.25 MHz"),
 		.operation_mode("normal"),
 		.number_of_clocks(5),
-		.output_clock_frequency0("19.2 MHz"),
+		.output_clock_frequency0("12.384 MHz"),	 	// Pixel Clock
 		.phase_shift0("0 ps"),
 		.duty_cycle0(50),
-		.output_clock_frequency1("19.2 MHz"),
-		.phase_shift1("13021 ps"),
+		.output_clock_frequency1("12.384 MHz"), 	// Pixel Clock (90 deg)
+		.phase_shift1("20187 ps"),
 		.duty_cycle1(50),
-		.output_clock_frequency2("133.119993 MHz"),
+		.output_clock_frequency2("44.411585 MHz"), 	// Uxn CPU and Draw Queue
 		.phase_shift2("0 ps"),
 		.duty_cycle2(50),
-		.output_clock_frequency3("133.119992 MHz"),
-		.phase_shift3("6573 ps"),
+		.output_clock_frequency3("128.793599 MHz"), // VRAM
+		.phase_shift3("0 ps"),
 		.duty_cycle3(50),
-		.output_clock_frequency4("133.119990 MHz"),
-		.phase_shift4("5634 ps"),
+		.output_clock_frequency4("0 MHz"),
+		.phase_shift4("0 ps"),
 		.duty_cycle4(50),
 		.output_clock_frequency5("0 MHz"),
 		.phase_shift5("0 ps"),

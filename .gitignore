@@ -1,6 +1,5 @@
-src/fpga/core/pipelinec_output_uxn.c_1/
-src/fpga/core/pipelinec_output_uxn.c_1/
-dist/Cores/tsalvo.varvara/bitstream.rbf_r
-src/fpga/output_files/bitstream.rbf_r
-src/fpga/output_files/ap_core.rbf
-src/fpga/output_files/ap_core.jdi
+src/fpga/output_files/*
+*.rbf
+*.rbf_r
+*.DS_Store
+src/fpga/apf/build_id.mif
