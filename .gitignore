@@ -3,3 +3,4 @@ src/fpga/output_files/*
 *.rbf_r
 *.DS_Store
 src/fpga/apf/build_id.mif
+src/fpga/apf/build_id.mif
