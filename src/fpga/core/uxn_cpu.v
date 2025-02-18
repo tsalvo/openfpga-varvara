@@ -2293,6 +2293,7 @@ module uxn_cpu
 			device_ram_write_enable <= 1;
 			device_ram_write_value <= {7'd0, pxl_x[8]} + (pxl_x[7:0] == 8'hFF ? {7'd0, is_auto_px_x} : 0);
 			device_ram_addr <= 8'h28; // x (hi)
+			is_deo_done <= ~is_auto_px_x & ~is_auto_px_y;
 		end
 		8: begin
 			queue_write_enable <= 0;

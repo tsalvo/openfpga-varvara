@@ -37,7 +37,7 @@ module  mf_pllbase_0002(
 		.output_clock_frequency1("12.384 MHz"), 	// Pixel Clock (90 deg)
 		.phase_shift1("20187 ps"),
 		.duty_cycle1(50),
-		.output_clock_frequency2("44.411585 MHz"), 	// Uxn CPU and Draw Queue
+		.output_clock_frequency2("45.997714 MHz"), 	// Uxn CPU and Draw Queue
 		.phase_shift2("0 ps"),
 		.duty_cycle2(50),
 		.output_clock_frequency3("128.793599 MHz"), // VRAM
