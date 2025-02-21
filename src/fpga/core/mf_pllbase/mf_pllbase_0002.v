@@ -40,7 +40,7 @@ module  mf_pllbase_0002(
 		.output_clock_frequency2("45.997714 MHz"), 	// Uxn CPU and Draw Queue
 		.phase_shift2("0 ps"),
 		.duty_cycle2(50),
-		.output_clock_frequency3("128.793599 MHz"), // VRAM
+		.output_clock_frequency3("143.103999 MHz"), // VRAM
 		.phase_shift3("0 ps"),
 		.duty_cycle3(50),
 		.output_clock_frequency4("0 MHz"),

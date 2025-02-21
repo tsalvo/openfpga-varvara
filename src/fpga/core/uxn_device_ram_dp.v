@@ -11,23 +11,21 @@ module uxn_device_ram_dp
 	// Port A
 	always @ (posedge clk_a)
 	begin
-		if (we_a) 
-		begin
+		case (we_a)
+		0: begin
+			q_a <= ram[addr_a];
+		end
+		1: begin
 			ram[addr_a] <= data_a;
 			q_a <= data_a;
 		end
-		else 
-		begin
-			q_a <= ram[addr_a];
-		end
+		endcase
 	end
 	
 	// Port B
 	always @ (posedge clk_b)
 	begin
-		begin
-			q_b <= ram[addr_b];
-		end
+		q_b <= ram[addr_b];
 	end
 	
 endmodule

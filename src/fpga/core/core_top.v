@@ -654,8 +654,8 @@ end
 // VRAM Controller
 // 
 // TODO: use auto-sync counting instead of hard-coded values
-localparam  VRAM_COPY_CYCLE_BEGIN = 24'd2053491;
-localparam  VRAM_COPY_CYCLE_END = 24'd2145655;
+localparam  VRAM_COPY_CYCLE_END = 24'd2385052;
+localparam  VRAM_COPY_CYCLE_BEGIN = VRAM_COPY_CYCLE_END - 24'd92164;
 
 reg vram_last_cycle_count_latch = 0;
 reg vram_cycle_count_latch = 0;

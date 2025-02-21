@@ -2088,7 +2088,6 @@ module uxn_cpu
 	task device_out(input [7:0] addr, input [7:0] value, input [7:0] d_phase);
 		case (d_phase)
 		0: begin
-			queue_write_enable <= 0;
 			device_ram_write_enable <= 1;
 			device_ram_addr <= addr;
 			device_ram_write_value <= value;
@@ -2100,8 +2099,6 @@ module uxn_cpu
 				screen_deo(addr[3:0], value, d_phase - 1);
 			end
 			default: begin
-				queue_write_enable <= 0;
-				device_ram_write_enable <= 0;
 				is_deo_done <= 1;
 			end
 			endcase
@@ -2118,8 +2115,6 @@ module uxn_cpu
 			sprite_deo(value, screen_phase);
 		end
 		default: begin
-			queue_write_enable <= 0;
-			device_ram_write_enable <= 0;
 			is_deo_done <= 1;
 		end
 		endcase
@@ -2140,23 +2135,17 @@ module uxn_cpu
 			spr_x <= 0;
 			spr_y <= 0;
 			is_auto_addr <= 0;
-			device_ram_addr <= 0;
-			queue_write_enable <= 0;
-			device_ram_write_enable <= 0;
 			device_ram_addr <= 8'h28; // x (hi)
 		end
 		1: begin
-			device_ram_write_enable <= 0;
 			device_ram_addr <= 8'h29; // x (lo)
 		end
 		2: begin
 			x[15:8] <= device_ram_read_value;
-			device_ram_write_enable <= 0;
 			device_ram_addr <= 8'h2A; // y (hi)
 		end
 		3: begin
 			x[7:0] <= device_ram_read_value;
-			device_ram_write_enable <= 0;
 			device_ram_addr <= 8'h2B; // y (lo)
 		end
 		4: begin
@@ -2190,8 +2179,6 @@ module uxn_cpu
 			inner_sprite_phase <= inner_sprite_phase + 1;
 			case (inner_sprite_phase)
 			0: begin
-				device_ram_write_enable <= 0;
-				queue_write_enable <= 0;
 				is_last_blit <= screen_auto_length == 0 ? 1 : 0;
 			end
 			1: begin
@@ -2212,7 +2199,6 @@ module uxn_cpu
 			end
 			3: begin
 				screen_ram_addr <= is_auto_addr ? (spr_mode ? screen_ram_addr + 16 : screen_ram_addr + 8) : screen_ram_addr;
-				queue_write_enable <= 0;
 				device_ram_write_enable <= 1;
 				device_ram_addr <= 8'h29; // x (lo)
 				device_ram_write_value <= x[7:0];
@@ -2259,8 +2245,6 @@ module uxn_cpu
 			is_auto_px_y <= 0;
 			pxl_x <= 0;
 			pxl_y <= 0;
-			queue_write_enable <= 0;
-			device_ram_write_enable <= 0;
 			device_ram_addr <= 8'h28; // x (hi)
 		end
 		1: begin
@@ -2296,7 +2280,6 @@ module uxn_cpu
 			is_deo_done <= ~is_auto_px_x & ~is_auto_px_y;
 		end
 		8: begin
-			queue_write_enable <= 0;
 			device_ram_write_enable <= 1;
 			device_ram_addr <= 8'h29; // x (lo)
 			device_ram_write_value <= pxl_x[7:0] + {7'd0, is_auto_px_x};
