@@ -204,7 +204,6 @@ module uxn_cpu
 			case (is_wait) 
 			1: begin
 				phase <= 0;
-				device_ram_write_enable <= 0;
 				main_ram_addr <= pc;
 				main_ram_write_enable <= 0;
 				main_ram_write_value <= 0;
