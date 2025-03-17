@@ -12,7 +12,7 @@ Unzip the latest core from the _Releases_ section, and copy + merge the `Assets`
 ## Specs
 
 - Display: 320x288 at 60Hz
-- CPU: 45.997714 MHz
+- CPU: 47.701333 MHz
 - Main RAM: 64 KB 
 - Stack RAM: 2x 256 bytes
 - Device RAM: 256 bytes
@@ -50,7 +50,13 @@ I added some test ROMs into the `dist/assets` folder. Some of these are slightly
 
 #### Windows / Linux: 
 
+Quartus Lite App:
 Use Quartus Lite Edition to open the project at `src/fpga/ap_core.qpf` and build.
+
+Command line (example):
+```
+~/intelFPGA_lite/23.1std/quartus/bin/quartus_sh --flow compile src/fpga/ap_core.qpf
+```
 
 #### macOS:
 
