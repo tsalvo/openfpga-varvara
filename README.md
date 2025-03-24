@@ -55,7 +55,7 @@ Use Quartus Lite Edition to open the project at `src/fpga/ap_core.qpf` and build
 
 Command line (example):
 ```
-~/intelFPGA_lite/23.1std/quartus/bin/quartus_sh --flow compile src/fpga/ap_core.qpf
+~/altera_lite/24.1std/quartus/bin/quartus_sh --flow compile src/fpga/ap_core.qpf
 ```
 
 #### macOS:
