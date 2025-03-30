@@ -7,7 +7,7 @@ module uxn_queue_ram_dp
 );
 	// Declare the RAM variable
 	reg [23:0] ram[4095:0];
-	
+
 	// Port A (writing)
 	always @ (posedge clk)
 	begin
@@ -16,11 +16,11 @@ module uxn_queue_ram_dp
 			ram[wr_addr] <= data;
 		end
 	end
-	
+
 	// Port B (reading)
 	always @ (posedge clk)
 	begin
 		q <= ram[rd_addr];
 	end
-	
+
 endmodule

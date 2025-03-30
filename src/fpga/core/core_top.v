@@ -516,13 +516,13 @@ assign video_hs = vidout_hs;
 
     reg [9:0]   x_count;
     reg [9:0]   y_count;
-    
+
     wire [9:0]  visible_x = x_count - VID_H_BPORCH;
     wire [9:0]  visible_y = y_count - VID_V_BPORCH;
-    
+
     reg [7:0]  pxl_device_ram_read_addr;
     reg [16:0] vram_read_addr;
-    
+
     reg has_set_palette = 0;
     reg [11:0] color_0 = 0;
     reg [11:0] color_1 = 0;
@@ -538,29 +538,29 @@ assign video_hs = vidout_hs;
 always @(posedge clk_core_pixel or negedge reset_n) begin
 
     if(~reset_n) begin
-    
+
         x_count <= 0;
         y_count <= 0;
-        
+
     end else begin
         vidout_de <= 0;
         vidout_skip <= 0;
         vidout_vs <= 0;
         vidout_hs <= 0;
-        
+
         vidout_hs_1 <= vidout_hs;
         vidout_de_1 <= vidout_de;
         // x and y counters
         x_count <= x_count + 1'b1;
         if(x_count == VID_H_TOTAL-1) begin
             x_count <= 0;
-            
+
             y_count <= y_count + 1'b1;
             if(y_count == VID_V_TOTAL-1) begin
                 y_count <= 0;
             end
         end
-        
+
         if (y_count == 0) begin // generate vsync and read palette colors on line 0
          case (x_count)
          0: begin
@@ -609,7 +609,7 @@ always @(posedge clk_core_pixel or negedge reset_n) begin
          end
          endcase
         end
-        
+
         // we want HS to occur a bit after VS, not on the same cycle
         if(x_count == 3) begin
             // sync signal in back porch
@@ -626,11 +626,11 @@ always @(posedge clk_core_pixel or negedge reset_n) begin
             if(x_count >= (VID_H_BPORCH - 1) && x_count < (VID_H_ACTIVE + VID_H_BPORCH - 1)) begin
                vram_read_addr <= vram_read_addr + 1;
             end
-            
+
             if(x_count >= VID_H_BPORCH && x_count < VID_H_ACTIVE+VID_H_BPORCH) begin
                 // data enable. this is the active region of the line
                 vidout_de <= 1;
-                
+
                 case(uxn_vram_read_value)
                 2'd0: begin
                     vidout_rgb <= has_set_palette ? {color_0[11:8], 4'h0, color_0[7:4], 4'h0, color_0[3:0], 4'h0} : 24'hF0F0F0;
@@ -652,7 +652,7 @@ end
 
 ///////////////////////////////////////////////////////////////////////////////
 // VRAM Controller
-// 
+//
 // TODO: use auto-sync counting instead of hard-coded values
 localparam  VRAM_COPY_CYCLE_END = 24'd2385052;
 localparam  VRAM_COPY_CYCLE_BEGIN = VRAM_COPY_CYCLE_END - 24'd92164;
@@ -675,7 +675,7 @@ begin
    vram_last_vsync <= vidout_vs_vram_s;
    inner_cycle_count_latch <= inner_cycle_count_latch ? 1 : ~vram_last_vsync & vidout_vs_vram_s;
    vram_cycle_count_latch <= vram_cycle_count_latch ? 1 : inner_cycle_count_latch & ~vram_last_vsync & vidout_vs_vram_s;
-   
+
    case (vram_cycle_count_latch)
    0: begin
       vram_write_enable <= 0;
@@ -714,7 +714,7 @@ begin
       end
       endcase
    end
-   endcase   
+   endcase
 end
 
 
@@ -737,7 +737,7 @@ always @(posedge clk_74a) begin
         audgen_mclk <= ~audgen_mclk;
         audgen_accum <= audgen_accum - 21'd742500 + CYCLE_48KHZ;
     end
-    
+
     if (bridge_wr) begin
        casex (bridge_addr)
          32'h10000200: begin
@@ -768,7 +768,7 @@ always @(negedge audgen_sclk) begin
     if(audgen_lrck_cnt == 31) begin
         // switch channels
         audgen_lrck <= ~audgen_lrck;
-        
+
     end 
 end
 
@@ -799,7 +799,7 @@ data_loader #(
     wire    clk_core_pixel_90deg;
     wire    clk_core_uxn;
     wire    clk_core_vram;
-    
+
     wire    pll_core_locked;
     wire    pll_core_locked_s;
 synch_3 s01(pll_core_locked, pll_core_locked_s, clk_74a);
@@ -807,13 +807,13 @@ synch_3 s01(pll_core_locked, pll_core_locked_s, clk_74a);
 mf_pllbase mp1 (
     .refclk         ( clk_74a ),
     .rst            ( 0 ),
-    
+
     .outclk_0       ( clk_core_pixel ),
     .outclk_1       ( clk_core_pixel_90deg ),
     .outclk_2       ( clk_core_uxn ),
     .outclk_3       ( clk_core_vram ),
-    
-    
+
+
     .locked         ( pll_core_locked )
 );
 
@@ -981,7 +981,7 @@ uxn_draw_queue uxn_draw_queue (
    .main_ram_read_value(uxn_main_ram_read_value_b),
    .queue_ram_read_value(uxn_queue_bg_ram_read_value),
    .clk(clk_core_uxn),
-   
+
    // output
    .main_ram_addr(main_ram_addr_b),
    .queue_ram_write_enable(queue_ram_write_enable),
@@ -1002,7 +1002,7 @@ uxn_queue_ram_dp uxn_queue_ram (
    .we(queue_ram_write_enable),
    .rd_addr(queue_ram_rd_addr),
    .clk(clk_core_uxn),
-   
+
    // output
    .q(uxn_queue_bg_ram_read_value)
 );
@@ -1015,7 +1015,7 @@ uxn_vram uxn_vram_bg (
    .write_enable(layer_vram_write_en & ~layer_vram_write_layer),
    .read_clock(clk_core_vram),
    .write_clock(clk_core_uxn),
-   
+
    // output
    .read_value(uxn_vram_bg_read_value)
 );
@@ -1028,7 +1028,7 @@ uxn_vram uxn_vram_fg (
    .write_enable(layer_vram_write_en & layer_vram_write_layer),
    .read_clock(clk_core_vram),
    .write_clock(clk_core_uxn),
-   
+
    // output
    .read_value(uxn_vram_fg_read_value)
 );
@@ -1041,22 +1041,22 @@ uxn_vram uxn_vram (
    .write_enable(vram_write_enable),
    .read_clock(clk_core_pixel),
    .write_clock(clk_core_vram),
-   
+
    // output
    .read_value(uxn_vram_read_value)
 );
 
 uxn_main_ram_dp uxn_main_ram (
-    // input
-    .data_a(main_ram_write_value_a),
-    .addr_a(main_ram_addr_a),
-    .addr_b(main_ram_addr_b),
-    .we_a(main_ram_write_en_a),
-    .clk(clk_core_uxn),
-    
-    // output
-    .q_a(uxn_main_ram_read_value_a),
-    .q_b(uxn_main_ram_read_value_b)
+   // input
+   .data_a(main_ram_write_value_a),
+   .addr_a(main_ram_addr_a),
+   .addr_b(main_ram_addr_b),
+   .we_a(main_ram_write_en_a),
+   .clk(clk_core_uxn),
+
+   // output
+   .q_a(uxn_main_ram_read_value_a),
+   .q_b(uxn_main_ram_read_value_b)
 );
 
 uxn_stack_ram_dp uxn_stack_ram_dp (
@@ -1068,7 +1068,7 @@ uxn_stack_ram_dp uxn_stack_ram_dp (
    .we_a(stack_ram_write_en_a),
    .we_b(stack_ram_write_en_b),
    .clk(clk_core_uxn),
-   
+
    // output
    .q_a(uxn_stack_ram_read_value_a),
    .q_b(uxn_stack_ram_read_value_b)
@@ -1082,7 +1082,7 @@ uxn_device_ram_dp uxn_device_ram (
    .we_a(device_ram_write_en),
    .clk_a(clk_core_uxn),
    .clk_b(clk_core_pixel),
-   
+
    // output
    .q_a(uxn_device_ram_read_value),
    .q_b(pxl_device_ram_read_value)

@@ -22,25 +22,25 @@ module uxn_cpu
 	input        boot_valid_byte,
 	input        is_draw_queue_ready,
 	input        did_copy_buffer,
-	
+
 	output reg main_ram_write_enable,
 	output reg [15:0] main_ram_addr,
 	output reg [7:0] main_ram_write_value,
-	
+
 	output reg stack_ram_write_enable_a,
 	output reg [8:0] stack_ram_addr_a,
 	output reg [7:0] stack_ram_write_value_a,
 	output reg stack_ram_write_enable_b,
 	output reg [8:0] stack_ram_addr_b,
 	output reg [7:0] stack_ram_write_value_b,
-	
+
 	output reg device_ram_write_enable,
 	output reg [7:0] device_ram_addr,
 	output reg [7:0] device_ram_write_value,
-	
+
 	output reg queue_write_enable, 
 	output reg [23:0] queue_write_value,
-	
+
 	output reg is_screen_vector_running
 );
 	reg [15:0] pc = 16'h0100;
@@ -68,7 +68,7 @@ module uxn_cpu
 	reg [7:0] sp_offset_a = 0;
 	reg [7:0] sp_offset_b = 0;
 	reg is_stack_index_flipped = 0;
-	
+
 	reg [7:0] last_controller0 = 0;
 	reg [15:0] x = 0;
 	reg [15:0] y = 0;
@@ -109,7 +109,7 @@ module uxn_cpu
 	reg is_mouse = 0;
 	reg is_draw_queue_ready_reg = 0;
 	reg did_copy_buffer_reg = 0;
-	
+
 	reg last_vsync = 0;
 	reg [31:0] rtc_date_bcd_r = 0;
 	reg [31:0] rtc_time_bcd_r = 0; 
@@ -207,21 +207,21 @@ module uxn_cpu
 				main_ram_addr <= pc;
 				main_ram_write_enable <= 0;
 				main_ram_write_value <= 0;
-				
+
 				stack_ram_write_enable_a <= 0;
 				stack_ram_addr_a <= 0;
 				stack_ram_write_value_a <= 0;
 				stack_ram_write_enable_b <= 0;
 				stack_ram_addr_b <= 0;
 				stack_ram_write_value_b <= 0;
-				
+
 				queue_write_enable <= 0;
 				queue_write_value <= 0;
-				
+
 				device_ram_write_enable <= 0;
 				device_ram_addr <= 0;
 				device_ram_write_value <= 0;
-				
+
 				is_ins_done <= 0;
 				is_second_deo <= 0;
 				is_second_dei <= 0;
@@ -303,7 +303,7 @@ module uxn_cpu
 				stack_ram_write_enable_a <= 0;
 				stack_ram_write_enable_b <= 0;
 				main_ram_addr <= pc;
-				
+
 				case (phase)
 				0: begin
 					is_ins_done <= 0;
@@ -332,7 +332,7 @@ module uxn_cpu
 					opc_phase <= 0;
 				end
 				default: begin
-					
+
 					case (opc)
 					8'h00: /* BRK   */ begin
 						is_screen_vector_running <= 0;
@@ -1837,7 +1837,7 @@ module uxn_cpu
 			queue_write_enable <= 0;
 			queue_write_value <= 0;
 			device_ram_addr <= 0;
-		
+
 			is_screen_vector_running <= 0;
 			stack_ram_write_enable_a <= 1;
 			stack_ram_write_enable_b <= 0;
@@ -1845,15 +1845,15 @@ module uxn_cpu
 			stack_ram_addr_b <= 0;
 			stack_ram_write_value_a <= 0;
 			stack_ram_addr_b <= 0;
-			
+
 			device_ram_write_enable <= 1;
 			device_ram_addr <= boot_phase[7:0];
 			device_ram_write_value <= 0;
-			
+
 			main_ram_write_enable <= boot_valid_byte & ~boot_ram_full;
 			main_ram_addr <= boot_read_address + 16'h0100;
 			main_ram_write_value <= boot_read_value;
-			
+
 			boot_timeout <= boot_phase == 24'hFFFFFF;
 			boot_ram_full <= boot_ram_full | boot_read_address == 16'hFF00;
 			boot_phase <= boot_valid_byte ? 0 : boot_phase + 1;
@@ -1861,36 +1861,36 @@ module uxn_cpu
 		end
 		endcase
 	end
-	
+
 	task stack_write_a(input [7:0] a);
 		stack_ram_write_enable_a <= 1; 
 		stack_ram_write_enable_b <= 0; 
 		stack_ram_write_value_a <= a;
 	endtask
-	
+
 	task stack_write_ab(input [7:0] a, input [7:0] b);
 		stack_ram_write_enable_a <= 1; 
 		stack_ram_write_enable_b <= 1; 
 		stack_ram_write_value_a <= a;
 		stack_ram_write_value_b <= b;
 	endtask
-	
+
 	task update_stack(input [7:0] offset_a, input [7:0] offset_b, input index, input flip, input [7:0]s0, input [7:0]s1);
 		stack_ram_addr_a <= {index ^ flip, ((index ^ flip) ? s1 : s0) - offset_a};
 		stack_ram_addr_b <= {index ^ flip, ((index ^ flip) ? s1 : s0) - offset_b};
 	endtask
-	
+
 	task set_sp_offset(input [7:0] offset);
 		sp_offset_a <= offset;
 		update_stack(offset, sp_offset_b, stack_index, is_stack_index_flipped, sp0, sp1);
 	endtask
-	
+
 	task set_sp_offsets_ab(input [7:0] offset_a, input [7:0] offset_b);
 		sp_offset_a <= offset_a;
 		sp_offset_b <= offset_b;
 		update_stack(offset_a, offset_b, stack_index, is_stack_index_flipped, sp0, sp1);
 	endtask
-	
+
 	task flip_shift(input [7:0]amount);
 		is_stack_index_flipped <= 1;
 		case (stack_index)
@@ -1910,7 +1910,7 @@ module uxn_cpu
 		stack_index ? sp1 : sp1 + amount
 		);
 	endtask
-	
+
 	task shift(input [7:0]amount, input is_negative);
 		if (stack_index ^ is_stack_index_flipped) begin
 			sp1 <= is_negative ? sp1 - amount : sp1 + amount;
@@ -1925,7 +1925,7 @@ module uxn_cpu
 		(stack_index ^ is_stack_index_flipped) ? sp0 : (is_negative ? sp0 - amount : sp0 + amount), 
 		(stack_index ^ is_stack_index_flipped) ? (is_negative ? sp1 - amount : sp1 + amount) : sp1);
 	endtask
-	
+
 	task system_dei(input [7:0] addr, input [7:0] d_phase);
 		case (addr[3:0])
 		4: begin
@@ -1941,7 +1941,7 @@ module uxn_cpu
 		end
 		endcase
 	endtask
-	
+
 	task datetime_dei(input [3:0] addr);
 		case (addr)
 		0: begin // year (hi)
@@ -1982,7 +1982,7 @@ module uxn_cpu
 		end
 		endcase
 	endtask
-	
+
 	task controller_dei(input [7:0] addr, input [7:0] d_phase);
 		case (addr[3:0])
 		2: begin
@@ -1994,7 +1994,7 @@ module uxn_cpu
 		end
 		endcase
 	endtask
-	
+
 	task mouse_dei(input [7:0] addr, input [7:0] d_phase);
 		case (addr[3:0])
 		2: begin
@@ -2022,7 +2022,7 @@ module uxn_cpu
 		end
 		endcase
 	endtask
-	
+
 	task screen_dei(input [7:0] addr, input [7:0] d_phase);
 		case (addr[3:0])
 		2: begin
@@ -2046,7 +2046,7 @@ module uxn_cpu
 		end
 		endcase
 	endtask
-	
+
 	task generic_dei(input [7:0] addr, input [7:0] d_phase);
 		case (d_phase)
 		0, 1: begin
@@ -2060,7 +2060,7 @@ module uxn_cpu
 		end
 		endcase
 	endtask
-	
+
 	task device_in(input [7:0] addr, input [7:0] d_phase);
 		case (addr[7:4])
 		4'h0: begin
@@ -2083,7 +2083,7 @@ module uxn_cpu
 		end
 		endcase
 	endtask
-	
+
 	task device_out(input [7:0] addr, input [7:0] value, input [7:0] d_phase);
 		case (d_phase)
 		0: begin
@@ -2104,7 +2104,7 @@ module uxn_cpu
 		end
 		endcase
 	endtask
-	
+
 	task screen_deo(input [3:0] port, input [7:0] value, input [7:0] screen_phase);
 		case (port)
 		4'hE: begin // pixel port
@@ -2118,7 +2118,7 @@ module uxn_cpu
 		end
 		endcase
 	endtask
-	
+
 	task sprite_deo(input [7:0] value, input [7:0] screen_phase);
 		spr_mode <= value[7];
 		spr_layer <= value[6];
@@ -2231,7 +2231,7 @@ module uxn_cpu
 		end
 		endcase
 	endtask
-	
+
 	task pixel_deo(input [7:0] value, input [7:0] screen_phase);
 		px_mode <= value[7];
 		px_layer <= value[6];

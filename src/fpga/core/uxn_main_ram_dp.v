@@ -7,7 +7,7 @@ module uxn_main_ram_dp
 );
 	// Declare the RAM variable
 	reg [7:0] ram[65535:0];
-	
+
 	// Port A
 	always @ (posedge clk)
 	begin
@@ -21,7 +21,7 @@ module uxn_main_ram_dp
 			q_a <= ram[addr_a];
 		end
 	end
-	
+
 	// Port B
 	always @ (posedge clk)
 	begin
@@ -29,5 +29,5 @@ module uxn_main_ram_dp
 			q_b <= ram[addr_b];
 		end
 	end
-	
+
 endmodule

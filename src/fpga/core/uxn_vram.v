@@ -7,14 +7,14 @@ module uxn_vram
 );
 	// Declare the RAM variable
 	reg [1:0] ram[131071:0];
-	
+
 	always @ (posedge write_clock)
 	begin
 		// Write
 		if (write_enable)
 			ram[write_addr] <= write_value;
 	end
-	
+
 	always @ (posedge read_clock)
 	begin
 		// Read 

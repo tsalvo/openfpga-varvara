@@ -5,24 +5,24 @@ module uxn_draw_queue
 	input [7:0] main_ram_read_value,
 	input [23:0] queue_ram_read_value,
 	input clk,
-	
+
 	output reg [15:0] main_ram_addr,
 	output reg queue_ram_write_enable,
 	output reg [11:0] queue_ram_wr_addr,
 	output reg [23:0] queue_ram_write_value,
 	output reg [11:0] queue_ram_rd_addr,
-	
+
 	output reg vram_write_enable, 
 	output reg vram_write_layer,
 	output reg [16:0] vram_write_addr,
 	output reg [1:0] vram_write_value,
-	
+
 	output reg is_queue_empty
 );
 
 	reg [7:0] queue_draw_phase = 0;
 	reg [3:0] inner_draw_phase = 0;
-	
+
 	reg [15:0] sprite_row;
 	reg [2:0] queue_fetch_phase = 0;
 	reg [3:0] color = 0;
@@ -52,12 +52,12 @@ module uxn_draw_queue
 	reg opaque = 0;
 	reg fx = 0;
 	reg fy = 0;
-	
+
 	always @ (posedge clk)
 	begin
 		is_queue_empty <= (wr_ptr < rd_ptr + 1);
 	end
-	
+
 	always @ (posedge clk)
 	begin
 		queue_ram_write_enable <= 1;
@@ -73,18 +73,18 @@ module uxn_draw_queue
 		end
 		endcase
 	end
-	
+
 	always @ (posedge clk)
 	begin
 		case (is_valid)
 		0: begin
-			queue_fetch_phase <= queue_fetch_phase + 1;		
+			queue_fetch_phase <= queue_fetch_phase + 1;
 			vram_write_enable <= 0;
 			vram_write_value <= 0;
 			vram_write_addr <= 0;
 			vram_write_layer <= 0;
 			main_ram_addr <= 0;
-			queue_draw_phase <= 0;	
+			queue_draw_phase <= 0;
 			inner_draw_phase <= 0;
 			case (queue_fetch_phase)
 			0: begin
