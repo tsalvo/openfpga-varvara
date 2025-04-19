@@ -837,7 +837,7 @@ module uxn_cpu
 						3: begin
 							set_sp_offset(1); // set T
 							stack_ram_write_enable_a <= 1; 
-							stack_ram_write_value_a <= n8 - t8;
+							stack_ram_write_value_a <= n8 + ~t8 + 8'h01;
 						end
 						endcase
 					end
@@ -1576,7 +1576,7 @@ module uxn_cpu
 							l8 <= stack_ram_read_value_b;
 						end
 						4: begin
-							{z8, y8} <= {x8, l8} - {n8, t8};
+							{z8, y8} <= {x8, l8} + ~{n8, t8} + 16'h0001;
 							is_ins_done <= 1;
 						end
 						5: begin
