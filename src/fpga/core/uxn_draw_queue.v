@@ -99,7 +99,7 @@ module uxn_draw_queue
 			3: begin
 				has_qd0 <= queue_item_data_0 != 24'd0;
 				queue_item_data_1 <= queue_ram_read_value;
-				draw_mode <= {~queue_item_data_0[20] & queue_item_data_0[19], queue_item_data_0[20] | queue_item_data_0[18]};
+				draw_mode <= {~queue_item_data_0[20] & queue_item_data_0[19], queue_item_data_0[20] | (queue_item_data_0[18] & queue_item_data_0[19])};
 				layer <= queue_item_data_0[23];
 				x <= queue_item_data_0[20] & queue_item_data_0[18] ? 0 : {7'd0, queue_item_data_0[17:9]};
 				y <= queue_item_data_0[20] & queue_item_data_0[19] ? 0 : {7'd0, queue_item_data_0[8:0]};

@@ -2272,7 +2272,7 @@ module uxn_cpu
 		end
 		7: begin
 			queue_write_enable <= is_x_in_bounds & is_y_in_bounds;
-			queue_write_value <= {px_layer, px_color, px_mode, px_mode & px_flip_y, px_mode & px_flip_x, pxl_x, pxl_y};
+			queue_write_value <= {px_layer, px_color, px_mode, px_mode & px_flip_y, ~px_mode | px_flip_x, pxl_x, pxl_y};
 			device_ram_write_enable <= 1;
 			device_ram_write_value <= {7'd0, pxl_x[8]} + (pxl_x[7:0] == 8'hFF ? {7'd0, is_auto_px_x} : 0);
 			device_ram_addr <= 8'h28; // x (hi)
