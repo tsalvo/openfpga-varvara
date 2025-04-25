@@ -22,7 +22,7 @@ module uxn_draw_queue
 
 	reg [7:0] queue_draw_phase = 0;
 	reg [3:0] inner_draw_phase = 0;
-
+    reg is_y_in_bounds = 0;
 	reg [15:0] sprite_row;
 	reg [2:0] queue_fetch_phase = 0;
 	reg [3:0] color = 0;
@@ -186,6 +186,7 @@ module uxn_draw_queue
 				case (inner_draw_phase) 
 				0: begin
 					main_ram_addr <= sprite_addr;
+					is_y_in_bounds <= y < 16'd288;
 				end
 				1: begin
 					main_ram_addr <= sprite_addr + 8;
@@ -207,7 +208,7 @@ module uxn_draw_queue
 				default: begin
 					sprite_row <= sprite_row >> 1;
 					x <= fx ? (x + 1) : (x - 1);
-					vram_write_enable <= x < 16'd320 & y < 16'd288 & (opaque | sprite_row[0] | sprite_row[8]);
+					vram_write_enable <= x < 16'd320 & is_y_in_bounds & (opaque | sprite_row[0] | sprite_row[8]);
 					vram_write_layer <= layer;
 					vram_write_addr <= (y * 16'd320) + x;
 					vram_write_value <= sprite_row[8] ? (sprite_row[0] ? {blending3_1[color], blending3_0[color]} : {blending2_1[color], blending2_0[color]}) : (sprite_row[0] ? {blending1_1[color], blending1_0[color]} : {blending0_1[color], blending0_0[color]});
