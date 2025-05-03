@@ -1836,24 +1836,19 @@ module uxn_cpu
 		0: begin // booting
 			queue_write_enable <= 0;
 			queue_write_value <= 0;
-			device_ram_addr <= 0;
-
 			is_screen_vector_running <= 0;
 			stack_ram_write_enable_a <= 1;
 			stack_ram_write_enable_b <= 0;
 			stack_ram_addr_a <= boot_phase[8:0];
 			stack_ram_addr_b <= 0;
 			stack_ram_write_value_a <= 0;
-			stack_ram_addr_b <= 0;
-
+			stack_ram_write_value_b <= 0;
 			device_ram_write_enable <= 1;
 			device_ram_addr <= boot_phase[7:0];
 			device_ram_write_value <= 0;
-
 			main_ram_write_enable <= boot_valid_byte & ~boot_ram_full;
 			main_ram_addr <= boot_read_address + 16'h0100;
 			main_ram_write_value <= boot_read_value;
-
 			boot_timeout <= boot_phase == 24'hFFFFFF;
 			boot_ram_full <= boot_ram_full | boot_read_address == 16'hFF00;
 			boot_phase <= boot_valid_byte ? 0 : boot_phase + 1;
