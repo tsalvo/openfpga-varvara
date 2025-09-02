@@ -1,6 +1,6 @@
 # openfpga-varvara
 
-A core for Analogue Pocket that integrates the VHDL output of [varvara-fpga](https://github.com/tsalvo/varvara-fpga) (which is still an early work-in-progress [PipelineC](https://github.com/JulianKemmerer/PipelineC) FPGA implementation of [Varvara / Uxn](https://100r.co/site/uxn.html) by [Hundred Rabbits](https://100r.co/site/home.html)).
+A core for Analogue Pocket that integrates the VHDL output of [varvara-fpga](https://codeberg.org/tsalvo/varvara-fpga) (which is still an early work-in-progress [PipelineC](https://github.com/JulianKemmerer/PipelineC) FPGA implementation of [Varvara / Uxn](https://100r.co/site/uxn.html) by [Hundred Rabbits](https://100r.co/site/home.html)).
 
 ### Screenshots
 ![Tet](/screenshots/tet.png?raw=true) ![Flappy Bird](/screenshots/flappy_bird.png?raw=true) ![Donsol](/screenshots/donsol.png?raw=true) ![Amiga](/screenshots/amiga.png?raw=true)
