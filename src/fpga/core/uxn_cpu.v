@@ -1849,8 +1849,8 @@ module uxn_cpu
 			main_ram_write_enable <= boot_valid_byte & ~boot_ram_full;
 			main_ram_addr <= boot_read_address + 16'h0100;
 			main_ram_write_value <= boot_read_value;
-			boot_timeout <= boot_phase == 24'hFFFFFF;
-			boot_ram_full <= boot_ram_full | boot_read_address == 16'hFF00;
+			boot_timeout <= boot_phase[23:16] == 8'hFF;
+			boot_ram_full <= boot_ram_full | boot_read_address[15:8] == 8'hFF;
 			boot_phase <= boot_valid_byte ? 0 : boot_phase + 1;
 			is_booted <= has_set_time & (boot_timeout | boot_ram_full);
 		end
