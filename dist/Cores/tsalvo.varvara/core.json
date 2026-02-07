@@ -6,9 +6,9 @@
             "shortname": "varvara",
             "description": "Computer system running on Uxn",
             "author": "tsalvo",
-            "url": "https://github.com/tsalvo/openfpga-varvara",
-            "version": "0.0.4",
-            "date_release": "2024-08-17"
+            "url": "https://codeberg.org/tsalvo/openfpga-varvara",
+            "version": "0.0.5",
+            "date_release": "2025-02-17"
         },
         "framework": {
             "target_product": "Analogue Pocket",
