@@ -2,11 +2,11 @@
   "actions" : {
     "build" : {
       "enabled" : true,
-      "script" : "#!\/bin\/sh\ncd .\/src\/fpga\nopen -a docker && while ! docker info > \/dev\/null 2>&1; do sleep 1 ; done\ndocker run --platform linux\/amd64 -t --rm -v $(pwd):\/build didiermalenfant\/quartus:22.1-apple-silicon quartus_sh --flow compile ap_core.qpf\nrbfrmake output_files\/ap_core.rbf output_files\/bitstream.rbf_r"
+      "script" : "#!\/bin\/sh\ncd .\/src\/fpga\ncontainer system start\ncontainer run --rm --memory 4g --platform linux\/amd64 -t -v $(pwd):\/build didiermalenfant\/quartus:22.1-apple-silicon quartus_sh --flow compile ap_core.qpf\nrbfrmake output_files\/ap_core.rbf output_files\/bitstream.rbf_r"
     },
     "clean" : {
       "enabled" : true,
-      "script" : "#!\/bin\/sh\ncd .\/src\/fpga\nopen -a docker && while ! docker info > \/dev\/null 2>&1; do sleep 1 ; done\ndocker run --platform linux\/amd64 -t --rm -v $(pwd):\/build didiermalenfant\/quartus:22.1-apple-silicon quartus_sh --clean ap_core.qpf"
+      "script" : "#!\/bin\/sh\ncd .\/src\/fpga\ncontainer system start\ncontainer run --platform linux\/amd64 -t --rm -v $(pwd):\/build didiermalenfant\/quartus:22.1-apple-silicon quartus_sh --clean ap_core.qpf"
     }
   },
   "openLogOnRun" : "start"
